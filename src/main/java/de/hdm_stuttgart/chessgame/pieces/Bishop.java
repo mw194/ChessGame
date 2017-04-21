@@ -19,7 +19,7 @@ public class Bishop extends ChessPiece {
 			return false;
 		}
 
-		if(nextX == x || nextY == y) // Is moving horizonta l or vertical
+		if(nextX == x || nextY == y) // Is moving horizontal or vertical
 		{
 			return false;
 		}
