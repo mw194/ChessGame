@@ -27,8 +27,8 @@ public class Game {
 	}
 
 	private void fillDebug() {
-		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, 0, EnumPieceType.PAWN));
-		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 4, 1, EnumPieceType.PAWN));
+		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, 6, EnumPieceType.KING));
+		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 5, 5, EnumPieceType.ROOK));
 	}
 
 	void fillFull() {
