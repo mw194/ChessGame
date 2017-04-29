@@ -1,12 +1,7 @@
 package de.hdm_stuttgart.chessgame;
 
 import java.util.ArrayList;
-
-import de.hdm_stuttgart.chessgame.pieces.ChessPiece;
-import de.hdm_stuttgart.chessgame.pieces.ChessPieceFactory;
-import de.hdm_stuttgart.chessgame.pieces.EnumPieceColor;
-import de.hdm_stuttgart.chessgame.pieces.EnumPieceType;
-import de.hdm_stuttgart.chessgame.test.pieces.*;
+import de.hdm_stuttgart.chessgame.pieces.*;
 
 /**
  * Represents a single game.
