@@ -5,7 +5,7 @@ public class ChessPieceFactory
 	private ChessPieceFactory() {} // Can't touch this!
 	
 	/**
-	 * Createa a new {@link de.hdm_stuttgart.pieces.ChessPiece}.
+	 * Createa a new {@link de.hdm_stuttgart.chessgame.pieces.ChessPiece}.
 	 * @param team The piece's team
 	 * @param coordX The piece's vertical starting coordinate
 	 * @param coordY The piece's horizontal starting coordinate

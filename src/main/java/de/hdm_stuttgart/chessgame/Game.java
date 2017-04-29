@@ -178,7 +178,7 @@ public class Game
 	}
 	
 	/**
-	 * Removes a {@link de.hdm_stuttgart.pieces.ChessPiece} from the board.
+	 * Removes a {@link de.hdm_stuttgart.chessgame.pieces.ChessPiece} from the board.
 	 * @param chessPiece The piece to remove.
 	 */
 	public void removePiece(ChessPiece chessPiece)
