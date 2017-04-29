@@ -6,6 +6,10 @@ public class ChessPieceFactory
 	
 	public static ChessPiece getInstance(EnumPieceColor team, int coordX, int coordY, EnumPieceType type)
 	{
+		if (type == null)
+		{
+			throw new NullPieceTypeException("Piece type cannot be null!");
+		}
 		switch (type)
 		{
 			case ROOK:
@@ -21,7 +25,7 @@ public class ChessPieceFactory
 			case PAWN:
 				return new Pawn(team, coordX, coordY);
 			default:
-				throw new NullPointerException("Piece type cannot be null!");
+				throw new NullPieceTypeException("Piece type cannot be null!"); // Doesn't fire, but is needed.
 		}
 	}
 }
