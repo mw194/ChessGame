@@ -8,8 +8,7 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		log.debug("Test debug mesage");
-		
+		log.info("Test log message. Use this instead Sysout");
 		Game chess = new Game();
 
 		chess.printBoard();
