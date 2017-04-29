@@ -65,7 +65,7 @@ public class Pawn extends ChessPiece
 					//En Passant
 				if(board[x][nextY] != null && board[x][nextY].getColor() != color && board[x][nextY] instanceof Pawn ){
 					if(((Pawn)board[x][nextY]).firstMove == 1 ){
-						Game.getCurrentInstance().removePiece(board[x][nextY]);
+						Game.getCurrentInstance().removePiece(board[x][nextY]); // TODO: This is kind of bad design, try to find a better solution.
 						firstMove++;
 						return true;
 					}

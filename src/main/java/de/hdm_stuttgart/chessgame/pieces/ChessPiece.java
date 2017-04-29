@@ -52,6 +52,12 @@ public abstract class ChessPiece
 		return y;
 	}
 	
-	//check if the piece is able to move to the new location 
+	/**
+	 * Checks if a certain move would be valid based on a game board.
+	 * @param nextX Vertical coordinate to jump to
+	 * @param nextY Horizontal coordinate to jump to
+	 * @param board The simulated game board
+	 * @return Can the piece move there?
+	 */
 	public abstract boolean canMove(int nextX, int nextY, ChessPiece[][] board);
 }
