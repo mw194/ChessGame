@@ -2,10 +2,13 @@ package de.hdm_stuttgart.chessgame.pieces;
 
 import de.hdm_stuttgart.chessgame.Game;
 
-// claimed by Markus
+/**
+ * Represents a pawn piece.
+ */
 public class Pawn extends ChessPiece
 {
-	public Pawn(EnumPieceColor color, int x, int y) {
+	public Pawn(EnumPieceColor color, int x, int y)
+	{
 		super(color, x, y);
 	}
 	
@@ -14,15 +17,18 @@ public class Pawn extends ChessPiece
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
-		
 		if (nextX == x && nextY == y) // No movement
 		{
 			return false;
 		}
-		if(color == EnumPieceColor.WHITE && nextX >= x){
+		
+		if (color == EnumPieceColor.WHITE && nextX >= x)
+		{
 			return false;
 		}
-		if(color == EnumPieceColor.BLACK && nextX <= x){
+		
+		if (color == EnumPieceColor.BLACK && nextX <= x)
+		{
 			return false;
 		}
 		
@@ -31,12 +37,13 @@ public class Pawn extends ChessPiece
 			return false;
 		}
 
-		if(firstMove == 0 && color == EnumPieceColor.WHITE){
+		if (firstMove == 0 && color == EnumPieceColor.WHITE){
 			if(x-2 == nextX && nextY == y && board[nextX][nextY] == null && board[nextX +1][nextY] == null){
 				firstMove++;
 				return true;
 			}
 		}
+		
 		if(firstMove == 0 && color == EnumPieceColor.BLACK){
 			if(x+2 == nextX && nextY == y && board[nextX][nextY] == null && board[nextX -1][nextY] == null){
 				firstMove++;
@@ -70,35 +77,8 @@ public class Pawn extends ChessPiece
 		if (board[nextX][nextY] == null && nextX != x && nextY != y) // Filed is empty and chessPiece is moving diagonal
 		{  
 			return false;
-		} 
+		}
 		
-//		int m = 1;
-//		
-//		if(firstMove == 0) {
-//			m = 2;
-//		}
-//		
-//		if (nextX != x) // Movement in x direction
-//		{
-//			if (nextX > x) //Movement to bottom
-//			{
-//				if((nextX - x) == m) 
-//				{
-//					for (int i = nextX - 1; i > x; i--)
-//					{
-//						if (board[i][y] != null) return false;
-//					}
-//				}
-//				
-//			} else //Movement to top
-//			{
-//				for (int i = nextX + 1; i < x; i++)
-//				{
-//					if (board[i][y] != null) return false;
-//				}
-//			}
-//		} 
-//		
 		return true;
 	}
 

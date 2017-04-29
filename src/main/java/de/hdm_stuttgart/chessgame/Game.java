@@ -1,38 +1,43 @@
 package de.hdm_stuttgart.chessgame;
 
 import java.util.ArrayList;
-
 import de.hdm_stuttgart.chessgame.pieces.*;
 
 /**
  * Represents a single game.
  */
-public class Game {
+public class Game
+{
 	private static Game currentInstance;
 	
 	ChessPiece[][] board = new ChessPiece[8][8]; // Board
-	ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white
-															// pieces
-	ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black
-															// pieces
-
+	ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
+	ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	private ChessPiece selectedPiece;
 	private int turn = 0;
 
-	public Game() { // Constructor
+	public Game()
+	{
 		currentInstance = this;
 		// fillFull();
 		fillDebug();
 		update();
 	}
 
+	/**
+	 * For debugging use instead of {@link #fillFull()}.
+	 */
 	private void fillDebug() {
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, 6, EnumPieceType.KING));
 		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 5, 5, EnumPieceType.ROOK));
 	}
 
-	void fillFull() {
-		for (int i = 0; i < 8; i++) {
+	/**
+	 * Populates the board with a standard chess game.
+	 */
+	private void fillFull()
+	{
+		for (int i = 0; i < 8; i++) { // Pawns can be abbreviated
 			whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, i, EnumPieceType.PAWN));
 		}
 
@@ -60,36 +65,52 @@ public class Game {
 
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 4, EnumPieceType.QUEEN));
 		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 0, 4, EnumPieceType.QUEEN));
-
 	}
 
-	private EnumPieceColor getCurrentTeam() {
-		if (turn % 2 == 0) {
+	/**
+	 * @return The current player based on turns
+	 */
+	private EnumPieceColor getCurrentTeam()
+	{
+		if (turn % 2 == 0)
+		{
 			return EnumPieceColor.WHITE;
-		} else {
+		} else
+		{
 			return EnumPieceColor.BLACK;
 		}
 	}
 
-	void update() { // Updates the location of all Pieces
-		// clear board
-		for (int i = 0; i < board.length; i++) {
-			for (int j = 0; j < board.length; j++) {
+	/**
+	 * Repopulates the game board with all chess pieces
+	 */
+	private void update()
+	{
+		// Clear board
+		for (int i = 0; i < board.length; i++)
+		{
+			for (int j = 0; j < board.length; j++)
+			{
 				board[i][j] = null;
 			}
 		}
-
-		// Insert all white Pieces
-		for (ChessPiece piece : whitePieces) {
+		
+		// Re-insert all pieces
+		
+		whitePieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
-		}
-
-		// Insert all white Pieces
-		for (ChessPiece piece : blackPieces) {
+		});
+		
+		blackPieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
-		}
+		});
 	}
 
+	/**
+	 * Handles mouse input.
+	 * @param currentX Vertical coordinate of the field clicked
+	 * @param currentY Horizontal coordinate of the field clicked
+	 */
 	void select(int currentX, int currentY) {
 
 		if (selectedPiece == null) // no selected piece
@@ -107,7 +128,13 @@ public class Game {
 		}
 	}
 
-	void move(int xNew, int yNew) {
+	/**
+	 * Only for internal use.
+	 * Tries to perform a piece move with the current selected piece.
+	 * @param xNew The vertical coordinate to move to
+	 * @param yNew The horizontal coordinate to move to
+	 */
+	private void move(int xNew, int yNew) {
 		if (selectedPiece.canMove(xNew, yNew, board)) {
 			if (board[xNew][yNew] != null) {
 				System.out.println("Figur geschalgen");
@@ -129,6 +156,10 @@ public class Game {
 		}
 	}
 
+	/**
+	 * For debugging use.
+	 * Prints the current game board to the console.
+	 */
 	void printBoard() { // Prints the board
 		System.out.println("current player= " + getCurrentTeam());
 		System.out.println(" |0 1 2 3 4 5 6 7\n" + "-+----------------");
@@ -146,6 +177,10 @@ public class Game {
 		System.out.println();
 	}
 	
+	/**
+	 * Removes a {@link de.hdm_stuttgart.pieces.ChessPiece} from the board.
+	 * @param chessPiece The piece to remove.
+	 */
 	public void removePiece(ChessPiece chessPiece)
 	{
 		if (whitePieces.contains(chessPiece))
@@ -155,10 +190,11 @@ public class Game {
 		{
 			blackPieces.remove(chessPiece);
 		}
-		
 	}
 
-	
+	/**
+	 * @return The current active game instance
+	 */
 	public static Game getCurrentInstance()
 	{
 		return currentInstance;

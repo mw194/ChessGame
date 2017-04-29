@@ -1,6 +1,11 @@
 package de.hdm_stuttgart.chessgame.pieces;
 
-public class Queen extends ChessPiece{
+/**
+ * Represents a queen piece.
+ * @author da031
+ */
+public class Queen extends ChessPiece
+{
 	public Queen(EnumPieceColor color, int x, int y) {
 		super(color, x, y);
 	}

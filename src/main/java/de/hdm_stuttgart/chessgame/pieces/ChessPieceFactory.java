@@ -2,8 +2,16 @@ package de.hdm_stuttgart.chessgame.pieces;
 
 public class ChessPieceFactory
 {
-	private ChessPieceFactory() {}
+	private ChessPieceFactory() {} // Can't touch this!
 	
+	/**
+	 * Createa a new {@link de.hdm_stuttgart.pieces.ChessPiece}.
+	 * @param team The piece's team
+	 * @param coordX The piece's vertical starting coordinate
+	 * @param coordY The piece's horizontal starting coordinate
+	 * @param type The piece's type
+	 * @return A new chess piece
+	 */
 	public static ChessPiece getInstance(EnumPieceColor team, int coordX, int coordY, EnumPieceType type)
 	{
 		if (type == null)

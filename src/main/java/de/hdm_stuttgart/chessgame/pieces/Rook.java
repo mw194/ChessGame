@@ -1,5 +1,8 @@
 package de.hdm_stuttgart.chessgame.pieces;
 
+/**
+ * Represents a rook piece.
+ */
 public class Rook extends ChessPiece {
 
 	public Rook(EnumPieceColor color, int coordX, int coordY) {

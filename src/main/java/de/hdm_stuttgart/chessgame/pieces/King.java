@@ -1,9 +1,11 @@
 package de.hdm_stuttgart.chessgame.pieces;
 
-
+/**
+ * Represents a king piece.
+ * @author Erik
+ */
 public class King extends ChessPiece
 {
-
 	public King(EnumPieceColor color, int x, int y) {
 		super(color, x, y);
 	}

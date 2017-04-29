@@ -1,14 +1,19 @@
 package de.hdm_stuttgart.chessgame.pieces;
 
-public class Bishop extends ChessPiece {
-	public Bishop(EnumPieceColor color, int x, int y) {
+/**
+ * Represents a bishop piece.
+ * @author Diana
+ */
+public class Bishop extends ChessPiece
+{
+	public Bishop(EnumPieceColor color, int x, int y)
+	{
 		super(color, x, y);
 	}
 
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
-
 		if (nextX == x && nextY == y) // No movement
 		{
 			return false;
@@ -89,7 +94,8 @@ public class Bishop extends ChessPiece {
 	}
 
 	@Override
-	public String toString() {
+	public String toString()
+	{
 		return "b";
 	}
 }
