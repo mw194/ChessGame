@@ -7,7 +7,7 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
-
+log/
 .metadata
 bin/
 tmp/
@@ -19,6 +19,8 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+.DS_Store
 
 # External tool builders
 .externalToolBuilders/
@@ -57,3 +59,6 @@ local.properties
 .cache-main
 .scala_dependencies
 .worksheet
+
+.project
+.classpath
