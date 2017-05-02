@@ -13,7 +13,7 @@ public class RookTest
 		// Fill with pieces
 		ChessPiece dummyRook = ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 4, 4, EnumPieceType.ROOK);
 		board[4][4] = dummyRook;
-		board[4][2] = ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 4, 4, EnumPieceType.ROOK);;
+		board[4][2] = ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 4, 4, EnumPieceType.ROOK);
 		
 		assertTrue(dummyRook.canMove(2, 4, board)); // Up
 		assertTrue(dummyRook.canMove(5, 4, board)); // Down
