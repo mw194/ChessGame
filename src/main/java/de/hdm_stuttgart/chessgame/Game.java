@@ -19,18 +19,10 @@ public class Game
 	public Game()
 	{
 		currentInstance = this;
-		// fillFull();
-		fillDebug();
+		fillFull();
 		update();
 	}
 
-	/**
-	 * For debugging use instead of {@link #fillFull()}.
-	 */
-	private void fillDebug() {
-		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, 6, EnumPieceType.KING));
-		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 5, 5, EnumPieceType.ROOK));
-	}
 
 	/**
 	 * Populates the board with a standard chess game.
@@ -44,6 +36,10 @@ public class Game
 		for (int i = 0; i < 8; i++) {
 			blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 1, i, EnumPieceType.PAWN));
 		}
+		
+		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 4,4, EnumPieceType.BISHOP));
+		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 3,3, EnumPieceType.BISHOP));
+
 
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 0, EnumPieceType.ROOK));
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 7, EnumPieceType.ROOK));
@@ -86,6 +82,15 @@ public class Game
 	 */
 	private void update()
 	{
+		if (win() == 1) {
+			System.out.println("black wins");
+		}
+
+		if (win() == 2) {
+			System.out.println("white wins");
+		}
+		
+		
 		// Clear board
 		for (int i = 0; i < board.length; i++)
 		{
@@ -95,8 +100,7 @@ public class Game
 			}
 		}
 		
-		// Re-insert all pieces
-		
+		// Re-insert all pieces		
 		whitePieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
 		});
@@ -198,5 +202,28 @@ public class Game
 	public static Game getCurrentInstance()
 	{
 		return currentInstance;
+	}
+	
+	/**
+	 * Checks if the game is over
+	 * 3 := both kings alive
+	 * 2 := black king dead -> white wins
+	 * 1 := white king dead -> black wins
+	 * @return code for different options
+	 */
+	int win(){
+		int win = 0;
+		for(ChessPiece pivot : blackPieces){
+			if(pivot instanceof King){
+				win += 1;
+			}
+		}
+		
+		for(ChessPiece pivot : whitePieces){
+			if (pivot instanceof King) {
+				win += 2;
+			}
+		}
+		return win;
 	}
 }

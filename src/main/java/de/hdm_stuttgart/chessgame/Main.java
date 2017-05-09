@@ -8,12 +8,12 @@ public class Main
 	
 	public static void main(String[] args)
 	{
-		log.info("Test log message. Use this instead Sysout");
+		//log.info("Test log message. Use this instead Sysout");
 		Game chess = new Game();
+		chess.select(4, 4);
+		chess.select(1, 1);
 
-		chess.printBoard();
-		chess.select(6, 6);
-		chess.select(5, 5);
+
 		chess.printBoard();
 	}
 }

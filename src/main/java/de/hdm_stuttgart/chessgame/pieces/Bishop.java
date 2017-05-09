@@ -18,79 +18,78 @@ public class Bishop extends ChessPiece
 		{
 			return false;
 		}
-
 		if (board[nextX][nextY] != null && board[nextX][nextY].getColor() == color) // Own piece on place
 		{
 			return false;
 		}
-
-		if(nextX == x || nextY == y) // Is moving horizontal or vertical
+		if (nextX == x || nextY == y) // Is moving horizontal or vertical
 		{
 			return false;
 		}
 
-		if(nextX != x && nextY != y)  // Check if chessPiece goes diagonal
-		{
-			if(((x % 2) == 0 && (y % 2) == 0) || ((x % 2) != 0 && (y % 2) != 0)) // Check if current position both are even or odd
-			{
-				if(((nextX % 2) != 0 && (nextY % 2) == 0) || ((nextX % 2) == 0 && (nextY % 2) != 0)) // Check if next position both are not same (even/odd)
-				{
-					return false;
-				}
-			}
-
-			if(((x % 2) != 0 && (y % 2) == 0) || ((x % 2) == 0 && (y % 2) != 0)) // Check if current position is even or odd
-			{
-				if(((nextX % 2) == 0 && (nextY % 2) == 0) || ((nextX % 2) != 0 && (nextY % 2) != 0)) // Check if next position both are even or odd
-				{
-					return false;
-				}
-			}
-
-			if(nextY > y) // ChessPiece goes up
-			{
-				if(nextX > x ) // ChessPiece goes up right
-				{
-					for(int i = nextX - 1, j = nextY - 1; i > x; i--,j--) 
-					{
-						if(board[i][j] != null) {
-							return false;
+		if (nextX < x) { // up
+			if (nextY < y) { // up left
+				for (int i = 1; x - i >= 0 && y - i >= 0; i++) {
+					if (board[x - i][y - i] != null) {
+						if (nextX == x - i && nextY == y - i && board[x - i][y - i].getColor() != color) {
+							return true;
 						}
+						System.out.println("Figur im Weg");
+						return false;
+					}
+					if (nextX == x - i && nextY == y - i) {
+						return true;
 					}
 				}
-				else if(nextX < x) // ChessPiece goes up left
-				{
-					for(int i = nextX + 1, j = nextY - 1; i < x; i++, j--) { 
-						if(board[i][j] != null) {
-							return false;
-						}
-					}
-				}
-
 			}
-
-			if(nextY < y) // ChessPiece goes down
-			{
-				if(nextX < x) // ChessPiece goes down left
-				{
-					for(int i = nextX + 1, j = nextY + 1; i < x; i++, j++ ) {
-						if(board[i][j] != null) {
-							return false;
+			if (nextY > y) { // up right
+				for (int i = 1; x - i >= 0 && y + i <= 7; i++) {
+					if (board[x - i][y + i] != null) {
+						if (nextX == x - i && nextY == y + i && board[x - i][y + i].getColor() != color) {
+							return true;
 						}
+						System.out.println("Figur im Weg");
+						return false;
 					}
-				}
-				if(nextX > x) // ChessPiece goes down right
-				{
-					for(int i = nextX - 1, j = nextY + 1; i > x; i--,j++) {
-						if(board[i][j] != null) {
-							return false;
-						}
+					if (nextX == x - i && nextY == y + i) {
+						return true;
 					}
 				}
 			}
 		}
 
-		return true;
+		if (nextX > x) { // down
+			if (nextY < y) { // down left
+				for (int i = 1; x + i <= 7 && y - i >= 0; i++) {
+					if (board[x + i][y - i] != null) {
+						if (nextX == x + i && nextY == y - i && board[x + i][y - i].getColor() != color) {
+							return true;
+						}
+						System.out.println("Figur im Weg");
+						return false;
+					}
+					if (nextX == x + i && nextY == y - i) {
+						return true;
+					}
+				}
+			}
+			if (nextY > y) { // down right
+				for (int i = 1; x + i <= 7 && y + i <= 7; i++) {
+					if (board[x + i][y + i] != null) {
+						if (nextX == x + i && nextY == y + i && board[x + i][y + i].getColor() != color) {
+							return true;
+						}
+						System.out.println("Figur im Weg");
+						return false;
+					}
+					if (nextX == x + i && nextY == y + i) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
 	}
 
 	@Override
