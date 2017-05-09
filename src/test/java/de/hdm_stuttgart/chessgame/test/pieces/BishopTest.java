@@ -17,7 +17,7 @@ public class BishopTest
 		// Fill with pieces
 		ChessPiece dummyBishop = ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 4, 4, EnumPieceType.BISHOP);
 		board[4][4] = dummyBishop;
-		board[1][1] = ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 4, 4, EnumPieceType.BISHOP);
+		board[1][1] = ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 1, 1, EnumPieceType.BISHOP);
 		
 		assertTrue(dummyBishop.canMove(3, 5, board)); // Up right
 		assertTrue(dummyBishop.canMove(2, 6, board)); // Up right

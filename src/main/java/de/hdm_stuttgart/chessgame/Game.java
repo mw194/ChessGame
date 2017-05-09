@@ -37,7 +37,6 @@ public class Game
 			blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 1, i, EnumPieceType.PAWN));
 		}
 
-
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 0, EnumPieceType.ROOK));
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 7, EnumPieceType.ROOK));
 		blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 0, 0, EnumPieceType.ROOK));
