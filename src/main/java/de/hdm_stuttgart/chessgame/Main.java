@@ -10,9 +10,6 @@ public class Main
 	{
 		//log.info("Test log message. Use this instead Sysout");
 		Game chess = new Game();
-		chess.select(4, 4);
-		chess.select(1, 1);
-
 
 		chess.printBoard();
 	}

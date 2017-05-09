@@ -36,9 +36,6 @@ public class Game
 		for (int i = 0; i < 8; i++) {
 			blackPieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 1, i, EnumPieceType.PAWN));
 		}
-		
-		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 4,4, EnumPieceType.BISHOP));
-		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.BLACK, 3,3, EnumPieceType.BISHOP));
 
 
 		whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 7, 0, EnumPieceType.ROOK));
