@@ -2,6 +2,8 @@ package de.hdm_stuttgart.chessgame;
 
 import org.apache.logging.log4j.*;
 
+import de.hdm_stuttgart.chessgame.display.ConsoleDisplay;
+
 public class Main
 {
 	private static Logger log = LogManager.getLogger(Main.class);
@@ -9,8 +11,11 @@ public class Main
 	public static void main(String[] args)
 	{
 		//log.info("Test log message. Use this instead Sysout");
-		Game chess = new Game();
-
-		chess.printBoard();
+		Game chess = new Game(new ConsoleDisplay());
+	}
+	
+	public static Logger getLog()
+	{
+		return log;
 	}
 }

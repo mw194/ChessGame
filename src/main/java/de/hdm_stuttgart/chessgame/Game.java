@@ -1,6 +1,9 @@
 package de.hdm_stuttgart.chessgame;
 
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import de.hdm_stuttgart.chessgame.display.IDisplay;
 import de.hdm_stuttgart.chessgame.pieces.*;
 
 /**
@@ -15,9 +18,11 @@ public class Game
 	ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	private ChessPiece selectedPiece;
 	private int turn = 0;
+	private final IDisplay display;
 
-	public Game()
+	public Game(IDisplay display)
 	{
+		this.display = display;
 		currentInstance = this;
 		fillFull();
 		update();
@@ -79,13 +84,12 @@ public class Game
 	private void update()
 	{
 		if (win() == 1) {
-			System.out.println("black wins");
+			display.processCheckmate(EnumPieceColor.BLACK);
 		}
 
 		if (win() == 2) {
-			System.out.println("white wins");
+			display.processCheckmate(EnumPieceColor.WHITE);
 		}
-		
 		
 		// Clear board
 		for (int i = 0; i < board.length; i++)
@@ -104,6 +108,8 @@ public class Game
 		blackPieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
 		});
+		
+		display.processUpdate(board, getCurrentTeam());
 	}
 
 	/**
@@ -116,7 +122,7 @@ public class Game
 		if (selectedPiece == null) // no selected piece
 		{
 			if (board[currentX][currentY] == null || board[currentX][currentY].getColor() != getCurrentTeam()) {
-				System.out.println("Keine passende Figur gefunden!");
+				display.processInvalidAction("Keine passende Figur gefunden!");
 				return;
 			}
 			selectedPiece = board[currentX][currentY]; // Piece gets selected
@@ -137,7 +143,7 @@ public class Game
 	private void move(int xNew, int yNew) {
 		if (selectedPiece.canMove(xNew, yNew, board)) {
 			if (board[xNew][yNew] != null) {
-				System.out.println("Figur geschalgen");
+				Main.getLog().info("Figur geschlagen.");
 				if (whitePieces.contains(board[xNew][yNew])) {
 					whitePieces.remove(board[xNew][yNew]);
 				}
@@ -154,27 +160,6 @@ public class Game
 			System.out.println("Kann nicht dahin");
 			return;
 		}
-	}
-
-	/**
-	 * For debugging use.
-	 * Prints the current game board to the console.
-	 */
-	void printBoard() { // Prints the board
-		System.out.println("current player= " + getCurrentTeam());
-		System.out.println(" |0 1 2 3 4 5 6 7\n" + "-+----------------");
-		for (int i = 0; i < board.length; i++) {
-			System.out.print(i + "|");
-			for (int j = 0; j < board.length; j++) {
-				if (board[i][j] == null) {
-					System.out.print("  ");
-				} else {
-					System.out.print(board[i][j] + " ");
-				}
-			}
-			System.out.println();
-		}
-		System.out.println();
 	}
 	
 	/**
@@ -207,19 +192,32 @@ public class Game
 	 * 1 := white king dead -> black wins
 	 * @return code for different options
 	 */
-	int win(){
-		int win = 0;
-		for(ChessPiece pivot : blackPieces){
-			if(pivot instanceof King){
-				win += 1;
-			}
-		}
+	private int win()
+	{
+		final AtomicInteger atInt = new AtomicInteger(0); // Have to use AtomicInteger because this object has to be final
 		
-		for(ChessPiece pivot : whitePieces){
-			if (pivot instanceof King) {
-				win += 2;
-			}
-		}
-		return win;
+		// To meet the project requirements:
+		// Filtering the collection for condition "piece instanceof King"
+		// then for every piece that matches the condition, change the value of the atInt
+		blackPieces.stream().filter((piece) -> piece instanceof King).forEach((piece) -> {
+			atInt.getAndIncrement();
+		});
+		
+		whitePieces.stream().filter((piece) -> piece instanceof King).forEach((piece) -> {
+			atInt.getAndAdd(2);
+		});
+		
+//		for(ChessPiece pivot : blackPieces){
+//			if(pivot instanceof King){
+//				win += 1;
+//			}
+//		}
+//		
+//		for(ChessPiece pivot : whitePieces){
+//			if (pivot instanceof King) {
+//				win += 2;
+//			}
+//		}
+		return atInt.get();
 	}
 }
