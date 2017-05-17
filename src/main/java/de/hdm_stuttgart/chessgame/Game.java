@@ -34,6 +34,7 @@ public class Game
 	 */
 	private void fillFull()
 	{
+		
 		for (int i = 0; i < 8; i++) { // Pawns can be abbreviated
 			whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, i, EnumPieceType.PAWN));
 		}
@@ -83,14 +84,24 @@ public class Game
 	 */
 	private void update()
 	{
-		if (win() == 1) {
+		if (checkmate() == 1) {
+			Main.getLog().info("Black wins the game");
 			display.processCheckmate(EnumPieceColor.BLACK);
 		}
 
-		if (win() == 2) {
+		if (checkmate() == 2) {
+			Main.getLog().info("White wins the game");
 			display.processCheckmate(EnumPieceColor.WHITE);
 		}
 		
+		if(check() == 1){ //If White King is in Check
+			Main.getLog().info("White King is in Check");
+		}
+		
+		if(check() == 2){ //If Black King is in Check
+			Main.getLog().info("Black King is in Check");
+		}
+				
 		// Clear board
 		for (int i = 0; i < board.length; i++)
 		{
@@ -192,7 +203,7 @@ public class Game
 	 * 1 := white king dead -> black wins
 	 * @return code for different options
 	 */
-	private int win()
+	private int checkmate() //DE: Schachmatt
 	{
 		final AtomicInteger atInt = new AtomicInteger(0); // Have to use AtomicInteger because this object has to be final
 		
@@ -219,5 +230,41 @@ public class Game
 //			}
 //		}
 		return atInt.get();
+	}
+	
+	/**
+	 * Checks if a King can be beaten/is in check
+	 * 0 := No King is in check
+	 * 1 := White King is in check
+	 * 2 := Black King is in check
+	 * @return code for different options
+	 */
+	private int check() //DE: Im Schach stehen
+	{
+		for (ChessPiece pivot : whitePieces) {
+			if (pivot instanceof King) {
+				for (ChessPiece enemy : blackPieces) {
+					if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
+						System.out.println(enemy);
+						return 1;
+					}
+				}
+				break;
+			}		
+		}
+
+				
+		for (ChessPiece pivot : blackPieces) {
+			if (pivot instanceof King) {
+				for (ChessPiece enemy : whitePieces) {
+					if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
+						return 2;
+					}
+				}
+				break;
+			}
+		}
+	
+		return 0;
 	}
 }

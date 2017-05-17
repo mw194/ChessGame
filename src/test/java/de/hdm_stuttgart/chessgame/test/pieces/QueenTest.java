@@ -21,11 +21,22 @@ public class QueenTest
 		board[5][5] = dummyQueen;
 
 
+		assertTrue(dummyQueen.canMove(6, 6, board));
 		assertTrue(dummyQueen.canMove(7, 7, board));
+		assertTrue(dummyQueen.canMove(4, 4, board));
+		assertTrue(dummyQueen.canMove(3, 3, board));
+		assertTrue(dummyQueen.canMove(4, 6, board));
+		assertTrue(dummyQueen.canMove(3, 7, board));
+		assertTrue(dummyQueen.canMove(6, 4, board));
+		assertTrue(dummyQueen.canMove(7, 3, board));
+		assertTrue(dummyQueen.canMove(4, 5, board));
+		assertTrue(dummyQueen.canMove(3, 5, board));
+		assertTrue(dummyQueen.canMove(6, 5, board));
+		assertTrue(dummyQueen.canMove(7, 5, board));
+		assertTrue(dummyQueen.canMove(5, 4, board));
+		assertTrue(dummyQueen.canMove(5, 3, board));
+		assertTrue(dummyQueen.canMove(5, 6, board));
 		assertTrue(dummyQueen.canMove(5, 7, board));
-		assertTrue(dummyQueen.canMove(5, 2, board));
-		assertTrue(dummyQueen.canMove(2, 2, board));
-
 	}
 	
 	@Test
