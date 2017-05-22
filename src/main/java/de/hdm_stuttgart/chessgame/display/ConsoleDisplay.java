@@ -38,4 +38,19 @@ public class ConsoleDisplay implements IDisplay
 	{
 		Main.getLog().info(winner.name() + " wins!");
 	}
+
+	@Override
+	public void processCheckPreupdate(boolean whiteInCheck,
+			boolean blackInCheck)
+	{
+		if (whiteInCheck)
+		{
+			Main.getLog().info("White is in check");
+		}
+
+		if (blackInCheck)
+		{
+			Main.getLog().info("Black is in check");
+		}
+	}
 }

@@ -3,7 +3,7 @@ package de.hdm_stuttgart.chessgame.pieces;
 public class ChessPieceFactory
 {
 	private ChessPieceFactory() {} // Can't touch this!
-	
+
 	/**
 	 * Createa a new {@link de.hdm_stuttgart.chessgame.pieces.ChessPiece}.
 	 * @param team The piece's team

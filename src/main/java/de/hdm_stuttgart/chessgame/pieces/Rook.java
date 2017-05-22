@@ -13,7 +13,7 @@ public class Rook extends ChessPiece {
 	public String toString() {
 		return "r";
 	}
-	
+
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
@@ -21,17 +21,17 @@ public class Rook extends ChessPiece {
 		{
 			return false;
 		}
-		
+
 		if (nextX != x && nextY != y) // Diagaonal movement
 		{
 			return false;
 		}
-		
+
 		if (board[nextX][nextY] != null && board[nextX][nextY].getColor() == color) // Own piece on place
 		{
 			return false;
 		}
-		
+
 		if (nextX != x) // Movement in x direction
 		{
 			if (nextX > x) //Movement to bottom
@@ -63,7 +63,7 @@ public class Rook extends ChessPiece {
 				}
 			}
 		}
-		
+
 		return true;
 	}
 }

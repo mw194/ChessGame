@@ -13,16 +13,23 @@ public interface IDisplay
 	 * @param currentTeam The player now able to play
 	 */
 	public void processUpdate(ChessPiece[][] gameBoard, EnumPieceColor currentTeam);
-	
+
 	/**
 	 * Displays an error message
 	 * @param message The error message
 	 */
 	public void processInvalidAction(String message);
-	
+
 	/**
 	 * Processes the game ending
 	 * @param winner The game's winner
 	 */
 	public void processCheckmate(EnumPieceColor winner);
+
+	/**
+	 * Processes the current check status of each king
+	 * @param whiteInCheck Is the white king in check?
+	 * @param blackInCheck Is the black king in check?
+	 */
+	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck);
 }

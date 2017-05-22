@@ -12,7 +12,7 @@ import de.hdm_stuttgart.chessgame.pieces.*;
 public class Game
 {
 	private static Game currentInstance;
-	
+
 	ChessPiece[][] board = new ChessPiece[8][8]; // Board
 	ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
 	ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
@@ -34,7 +34,7 @@ public class Game
 	 */
 	private void fillFull()
 	{
-		
+
 		for (int i = 0; i < 8; i++) { // Pawns can be abbreviated
 			whitePieces.add(ChessPieceFactory.getInstance(EnumPieceColor.WHITE, 6, i, EnumPieceType.PAWN));
 		}
@@ -84,24 +84,17 @@ public class Game
 	 */
 	private void update()
 	{
-		if (checkmate() == 1) {
-			Main.getLog().info("Black wins the game");
-			display.processCheckmate(EnumPieceColor.BLACK);
-		}
+		int checkmateStatus = checkmate();
 
-		if (checkmate() == 2) {
-			Main.getLog().info("White wins the game");
-			display.processCheckmate(EnumPieceColor.WHITE);
-		}
-		
-		if(check() == 1){ //If White King is in Check
-			Main.getLog().info("White King is in Check");
-		}
-		
-		if(check() == 2){ //If Black King is in Check
-			Main.getLog().info("Black King is in Check");
-		}
-				
+		if (checkmateStatus == 1) {
+			display.processCheckmate(EnumPieceColor.BLACK);
+		} else
+			if (checkmateStatus == 2) {
+				display.processCheckmate(EnumPieceColor.WHITE);
+			}
+
+		display.processCheckPreupdate(checkCheck(EnumPieceColor.WHITE), checkCheck(EnumPieceColor.BLACK));
+
 		// Clear board
 		for (int i = 0; i < board.length; i++)
 		{
@@ -110,16 +103,16 @@ public class Game
 				board[i][j] = null;
 			}
 		}
-		
+
 		// Re-insert all pieces		
 		whitePieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
 		});
-		
+
 		blackPieces.forEach((piece) -> {
 			board[piece.getX()][piece.getY()] = piece;
 		});
-		
+
 		display.processUpdate(board, getCurrentTeam());
 	}
 
@@ -172,7 +165,7 @@ public class Game
 			return;
 		}
 	}
-	
+
 	/**
 	 * Removes a {@link de.hdm_stuttgart.chessgame.pieces.ChessPiece} from the board.
 	 * @param chessPiece The piece to remove.
@@ -195,7 +188,7 @@ public class Game
 	{
 		return currentInstance;
 	}
-	
+
 	/**
 	 * Checks if the game is over
 	 * 3 := both kings alive
@@ -206,65 +199,67 @@ public class Game
 	private int checkmate() //DE: Schachmatt
 	{
 		final AtomicInteger atInt = new AtomicInteger(0); // Have to use AtomicInteger because this object has to be final
-		
+
 		// To meet the project requirements:
 		// Filtering the collection for condition "piece instanceof King"
 		// then for every piece that matches the condition, change the value of the atInt
 		blackPieces.stream().filter((piece) -> piece instanceof King).forEach((piece) -> {
 			atInt.getAndIncrement();
 		});
-		
+
 		whitePieces.stream().filter((piece) -> piece instanceof King).forEach((piece) -> {
 			atInt.getAndAdd(2);
 		});
-		
-//		for(ChessPiece pivot : blackPieces){
-//			if(pivot instanceof King){
-//				win += 1;
-//			}
-//		}
-//		
-//		for(ChessPiece pivot : whitePieces){
-//			if (pivot instanceof King) {
-//				win += 2;
-//			}
-//		}
+
+		// This is the same as:
+
+		//		for(ChessPiece pivot : blackPieces){
+		//			if(pivot instanceof King){
+		//				win += 1;
+		//			}
+		//		}
+		//		
+		//		for(ChessPiece pivot : whitePieces){
+		//			if (pivot instanceof King) {
+		//				win += 2;
+		//			}
+		//		}
 		return atInt.get();
 	}
-	
+
 	/**
 	 * Checks if a King can be beaten/is in check
-	 * 0 := No King is in check
-	 * 1 := White King is in check
-	 * 2 := Black King is in check
-	 * @return code for different options
+	 * @param color The king to check
+	 * @return Is the king in check?
 	 */
-	private int check() //DE: Im Schach stehen
+	private boolean checkCheck(EnumPieceColor color) //DE: Im Schach stehen
 	{
-		for (ChessPiece pivot : whitePieces) {
-			if (pivot instanceof King) {
-				for (ChessPiece enemy : blackPieces) {
-					if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
-						System.out.println(enemy);
-						return 1;
+		if (color == EnumPieceColor.WHITE)
+		{
+			for (ChessPiece pivot : whitePieces) {
+				if (pivot instanceof King) {
+					for (ChessPiece enemy : blackPieces) {
+						if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
+							return true;
+						}
 					}
-				}
-				break;
-			}		
-		}
-
-				
-		for (ChessPiece pivot : blackPieces) {
-			if (pivot instanceof King) {
-				for (ChessPiece enemy : whitePieces) {
-					if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
-						return 2;
+					break;
+				}		
+			}
+		} else
+		{
+			for (ChessPiece pivot : blackPieces) {
+				if (pivot instanceof King) {
+					for (ChessPiece enemy : whitePieces) {
+						if (enemy.canMove(pivot.getX(), pivot.getY(), board)) {
+							return true;
+						}
 					}
+					break;
 				}
-				break;
 			}
 		}
-	
-		return 0;
+
+		return false;
 	}
 }

@@ -15,7 +15,7 @@ public class King extends ChessPiece
 		if(!distanceKing(nextX, nextY, board)){ //Distatnce to enemy King
 			return false;
 		}
-		
+
 		if (nextX == x && nextY == y) { // same position
 			return false;
 		}
@@ -29,7 +29,7 @@ public class King extends ChessPiece
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 

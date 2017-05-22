@@ -5,7 +5,7 @@ public abstract class ChessPiece
 	protected EnumPieceColor color;	//color of Piece
 	protected int x;			//Current x coordinate
 	protected int y;			//Current y coordinate
-	
+
 	/**
 	 * @param color This piece's team
 	 * @param x Starting position vertical coordinate
@@ -27,7 +27,7 @@ public abstract class ChessPiece
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	/**
 	 * @return This piece's team
 	 */
@@ -35,7 +35,7 @@ public abstract class ChessPiece
 	{
 		return color;
 	}
-	
+
 	/**
 	 * @return Current vertical coordinate
 	 */
@@ -43,7 +43,7 @@ public abstract class ChessPiece
 	{
 		return x;
 	}
-	
+
 	/**
 	 * @return Current horizontal coordinate
 	 */
@@ -51,7 +51,7 @@ public abstract class ChessPiece
 	{
 		return y;
 	}
-	
+
 	/**
 	 * Checks if a certain move would be valid based on a game board.
 	 * @param nextX Vertical coordinate to jump to

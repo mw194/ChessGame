@@ -11,9 +11,9 @@ public class Pawn extends ChessPiece
 	{
 		super(color, x, y);
 	}
-	
+
 	private int firstMove = 0; // 0-Not moved yet / 1 en passant / 2 
-	
+
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
@@ -21,17 +21,17 @@ public class Pawn extends ChessPiece
 		{
 			return false;
 		}
-		
+
 		if (color == EnumPieceColor.WHITE && nextX >= x)
 		{
 			return false;
 		}
-		
+
 		if (color == EnumPieceColor.BLACK && nextX <= x)
 		{
 			return false;
 		}
-		
+
 		if (board[nextX][nextY] != null && board[nextX][nextY].getColor() == color) // Own piece on place
 		{
 			return false;
@@ -43,7 +43,7 @@ public class Pawn extends ChessPiece
 				return true;
 			}
 		}
-		
+
 		if(firstMove == 0 && color == EnumPieceColor.BLACK){
 			if(x+2 == nextX && nextY == y && board[nextX][nextY] == null && board[nextX -1][nextY] == null){
 				firstMove++;
@@ -54,7 +54,7 @@ public class Pawn extends ChessPiece
 			return false;
 		}
 		if(y != nextY){ //Beat enemy piece
-			
+
 			if(Math.abs(nextY - y) != 1){
 				return false;
 			}
@@ -62,25 +62,25 @@ public class Pawn extends ChessPiece
 				firstMove = 2;
 				return true;
 			}
-					//En Passant
-				if(board[x][nextY] != null && board[x][nextY].getColor() != color && board[x][nextY] instanceof Pawn ){
-					if(((Pawn)board[x][nextY]).firstMove == 1 ){
-						// TODO: This is kind of bad design, try to find a better solution.
-						// Proposal: override move and do stuff there?
-						Game.getCurrentInstance().removePiece(board[x][nextY]); 
-						firstMove++;
-						return true;
-					}
+			//En Passant
+			if(board[x][nextY] != null && board[x][nextY].getColor() != color && board[x][nextY] instanceof Pawn ){
+				if(((Pawn)board[x][nextY]).firstMove == 1 ){
+					// TODO: This is kind of bad design, try to find a better solution.
+					// Proposal: override move and do stuff there?
+					Game.getCurrentInstance().removePiece(board[x][nextY]); 
+					firstMove++;
+					return true;
 				}
+			}
 			return false;
 		}
-		
-		
+
+
 		if (board[nextX][nextY] == null && nextX != x && nextY != y) // Filed is empty and chessPiece is moving diagonal
 		{  
 			return false;
 		}
-		
+
 		return true;
 	}
 
