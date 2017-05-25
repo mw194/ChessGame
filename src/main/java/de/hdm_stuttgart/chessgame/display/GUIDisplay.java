@@ -4,6 +4,9 @@ import de.hdm_stuttgart.chessgame.Game;
 import de.hdm_stuttgart.chessgame.pieces.*;
 import de.hdm_stuttgart.chessgame.GUIresources.*;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -51,6 +54,13 @@ public class GUIDisplay extends Application implements IDisplay
         buttonStart.setLayoutX(250-75);
         buttonStart.setLayoutY(180);
         buttonStart.setId("button");
+        
+		buttonStart.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				System.out.println("adasd");
+			}
+		});
+        
         root.getChildren().add(buttonStart);
         
         Button buttonOptionen = new Button("Options");
@@ -65,11 +75,17 @@ public class GUIDisplay extends Application implements IDisplay
         buttonEnd.setLayoutX(250-75);
         buttonEnd.setLayoutY(280);
         buttonEnd.setId("button");
+		buttonEnd.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+		        Platform.exit();
+				}
+		});
         root.getChildren().add(buttonEnd);
+        
 		
         scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());      
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
+
 	}
 }
