@@ -1,7 +1,10 @@
 package de.hdm_stuttgart.chessgame.display;
 
+import de.hdm_stuttgart.chessgame.Game;
 import de.hdm_stuttgart.chessgame.pieces.*;
 import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 @SuppressWarnings("restriction")
@@ -34,6 +37,12 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{
-		//Game game = new Game(this); // <- maybe
+		Game game = new Game(this);
+		
+		VBox root = new VBox();
+		Scene scene = new Scene(root, 500, 500);
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		
 	}
 }
