@@ -14,8 +14,8 @@ public class Game
 	private static Game currentInstance;
 
 	ChessPiece[][] board = new ChessPiece[8][8]; // Board
-	ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
-	ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
+	public ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
+	public ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	private ChessPiece selectedPiece;
 	private int turn = 0;
 	private final IDisplay display;
@@ -68,7 +68,7 @@ public class Game
 	/**
 	 * @return The current player based on turns
 	 */
-	private EnumPieceColor getCurrentTeam()
+	public EnumPieceColor getCurrentTeam()
 	{
 		if (turn % 2 == 0)
 		{
@@ -121,7 +121,7 @@ public class Game
 	 * @param currentX Vertical coordinate of the field clicked
 	 * @param currentY Horizontal coordinate of the field clicked
 	 */
-	void select(int currentX, int currentY) {
+	public void select(int currentX, int currentY) {
 
 		if (selectedPiece == null) // no selected piece
 		{
