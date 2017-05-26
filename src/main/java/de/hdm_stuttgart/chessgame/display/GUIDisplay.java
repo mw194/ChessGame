@@ -9,6 +9,7 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -17,6 +18,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -26,6 +28,8 @@ import javafx.stage.Stage;
 @SuppressWarnings("restriction")
 public class GUIDisplay extends Application implements IDisplay
 {
+	Game game = new Game(this);
+
 	@Override
 	public void processUpdate(ChessPiece[][] gameBoard, EnumPieceColor currentTeam)
 	{
@@ -52,21 +56,22 @@ public class GUIDisplay extends Application implements IDisplay
 
 	@Override
 	public void start(Stage primaryStage) throws Exception
-	{
-		
-		
-		Game game = new Game(this);
-		
-		Pane root = new Pane();
-		root.setId("pane");
-		Scene scene = new Scene(root, 500, 500);
+	{			
+		AnchorPane root = new AnchorPane();
+		root.setId("startscreen");
+		Scene scene = new Scene(root, 280, 280);
+
+		Label title = new Label("Chess");
+		title.setId("title");
+		AnchorPane.setLeftAnchor(title, 10.0);
+		root.getChildren().add(title);
 		
         Button buttonStart = new Button("Start new Game");
-        buttonStart.autosize();
-        buttonStart.setLayoutX(250-75);
-        buttonStart.setLayoutY(180);
-        buttonStart.setId("button");
-        
+        buttonStart.setAlignment(Pos.TOP_LEFT);
+        buttonStart.setPrefWidth(150);
+        AnchorPane.setLeftAnchor(buttonStart, 10.0);
+        AnchorPane.setBottomAnchor(buttonStart, 90.0);
+        buttonStart.getStyleClass().add("StartButton");   
 		buttonStart.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 				Stage gameStage = new Stage();
@@ -77,42 +82,35 @@ public class GUIDisplay extends Application implements IDisplay
 					e.printStackTrace();
 				}
 			}
-		});
-        
+		});       
         root.getChildren().add(buttonStart);
         
         Button buttonOptionen = new Button("Options");
-        buttonOptionen.autosize();
-        buttonOptionen.setLayoutX(250-75);
-        buttonOptionen.setLayoutY(230);
-        buttonOptionen.setId("button");
+        buttonOptionen.setAlignment(Pos.TOP_LEFT);
+        buttonOptionen.setPrefWidth(150);
+        AnchorPane.setLeftAnchor(buttonOptionen, 10.0);
+        AnchorPane.setBottomAnchor(buttonOptionen, 50.0);
+        buttonOptionen.getStyleClass().add("StartButton");
         root.getChildren().add(buttonOptionen);
         
         Button buttonEnd = new Button("Quit");
-        buttonEnd.autosize();
-        buttonEnd.setLayoutX(250-75);
-        buttonEnd.setLayoutY(280);
-        buttonEnd.setId("button");
+        buttonEnd.setAlignment(Pos.TOP_LEFT);
+        buttonEnd.setPrefWidth(150);
+        AnchorPane.setLeftAnchor(buttonEnd, 10.0);
+        AnchorPane.setBottomAnchor(buttonEnd, 10.0);
+        buttonEnd.getStyleClass().add("StartButton");
 		buttonEnd.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
 		        Platform.exit();
 				}
 		});
         root.getChildren().add(buttonEnd);
-        
-		
-        scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());      
+        	
+        scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());   
+        primaryStage.setTitle("Chess");
+        primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-		Stage gameStage = new Stage();
-		primaryStage.close();
-		try {
-			game(gameStage, game);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	public void game(Stage gameStage, Game game) throws Exception {
