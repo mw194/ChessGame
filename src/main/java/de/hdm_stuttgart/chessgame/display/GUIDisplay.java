@@ -16,11 +16,22 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Labeled;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -117,19 +128,10 @@ public class GUIDisplay extends Application implements IDisplay
         primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
-		
-		Stage gameStage = new Stage();
-		primaryStage.close();
-		try {
-			game(gameStage, game);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void game(Stage gameStage, Game game) throws Exception {
 		BorderPane canvas = new BorderPane();	
-		Group pieces = new Group();
 
 		//Toolbar////////////////
 		Button file = new Button("File");
@@ -149,35 +151,31 @@ public class GUIDisplay extends Application implements IDisplay
 		Label bot = new Label("v. 2.405.2a alpha");
 		bot.setStyle("-fx-font: .7em courier;");
 
-
+		
 		for (int row = 0; row < 8; row++) {
 			for (int column = 0; column < 8; column++) {
 				Button button = new Button();
 				button.setPrefWidth(75);
 				button.setPrefHeight(75);
-		        button.getStyleClass().add("field");         
-		        int x = column;
+				button.setStyle("-fx-background-color: transparent;");
+				int x = column;
 		        int y = row;
+		        
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						game.select(x, y);
-						pieces.getChildren().clear();
+						update(center, game);
 					}
-				});
+				});			
 				center.add(button, row, column);
 			}
 		}
 		
-		
-		
-		
-		
-			
-		
-		
 		canvas.setTop(top);
 		canvas.setCenter(center);
 		canvas.setBottom(new ToolBar(bot));
+
+		update(center, game);
 		
 		Scene scene = new Scene(canvas);
 		scene.getStylesheets().addAll(
@@ -186,78 +184,77 @@ public class GUIDisplay extends Application implements IDisplay
 		gameStage.setScene(scene);
 		gameStage.setWidth(600);
 		gameStage.setHeight(800);
-		gameStage.setResizable(false);
+		gameStage.setResizable(true);
 		gameStage.show();
 	}
 	
-	public void update(Pane canvas, Game game, Group pieces) {
-	
-		Label current = new Label("Current player: " + game.getCurrentTeam().toString());
-		current.setTranslateY(600);
-		pieces.getChildren().add(current);
+	public void update(GridPane center, Game game) {
+		for (Node button : center.getChildren()) { //Clear all textures
+			button.setStyle("-fx-background-image: none;"
+						  + "-fx-background-color: transparent;");
+			((Button)button).setBorder(null);
+		}
+		
 
 		for (ChessPiece p : game.whitePieces) {
-			Image piece = null;
-			ImageView x = new ImageView();
-
-			if (p instanceof Pawn) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Pawn_white.png");
-			}
-			if (p instanceof Queen) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Queen_white.png");
-			}
-			if (p instanceof King) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/King_white.png");
-			}
-			if (p instanceof Bishop) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Bishop_white.png");
-			}
-			if (p instanceof Knight) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Knight_white.png");
-			}
-			if (p instanceof Rook) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Rook_white.png");
-			}
+			String s = "";
 			
-			x.setLayoutX(p.getY()*75);
-			x.setLayoutY(p.getX()*75);
-			x.setFitHeight(75);
-			x.setFitWidth(75);
-			x.setImage(piece);
-			pieces.getChildren().add(x);
+			if (p instanceof Pawn) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_white.png";
+			if (p instanceof Queen) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_white.png";
+			if (p instanceof King) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/King_white.png";
+			if (p instanceof Bishop) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_white.png";
+			if (p instanceof Knight) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_white.png";
+			if (p instanceof Rook) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_white.png";
+
+			int index = p.getY() * 8 + p.getX();
+			int size = 50;
+			center.getChildren().get(index).setStyle(
+							"-fx-background-color: transparent;" 
+							+ "-fx-background-image: url('" + s + "'); "
+							+ "-fx-background-size: "+ size + "px;" 
+							+ "-fx-background-repeat: no-repeat;"
+							+ "-fx-background-position: center;");
 		}
 
 		for (ChessPiece p : game.blackPieces) {
-			Image piece = null;
-			ImageView x = new ImageView();
+			String s = "";
 
-			if (p instanceof Pawn) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Pawn_black.png");
-			}
-			if (p instanceof Queen) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Queen_black.png");
-			}
-			if (p instanceof King) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/King_black.png");
-			}
-			if (p instanceof Bishop) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png");
-			}
-			if (p instanceof Knight) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png");
-			}
-			if (p instanceof Rook) {
-				piece = new Image("/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png");
-			}
+			if (p instanceof Pawn) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_black.png";
+			if (p instanceof Queen) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_black.png";
+			if (p instanceof King) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/King_black.png";
+			if (p instanceof Bishop) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png";
+			if (p instanceof Knight) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png";
+			if (p instanceof Rook) 
+				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png";
+
+			int index = p.getY() * 8 + p.getX();
+			center.getChildren().get(index).setStyle(
+							"-fx-background-color: transparent;" 
+							+ "-fx-background-image: url('" + s + "'); "
+							+ "-fx-background-size: 50px;" 
+							+ "-fx-background-repeat: no-repeat;"
+							+ "-fx-background-position: center;");
 			
-			x.setLayoutX(p.getY()*75);
-			x.setLayoutY(p.getX()*75);
-			x.setFitHeight(75);
-			x.setFitWidth(75);
-			x.setImage(piece);
-			pieces.getChildren().add(x);
+			
+			
 		}
-		canvas.getChildren().add(pieces);
+		
+		if (game.selectedPiece != null) {
+			int indexSelected = game.selectedPiece.getY() * 8 + game.selectedPiece.getX();
+			((Button)center.getChildren().get(indexSelected)).setBorder(new Border(new BorderStroke(Color.BLACK, 
+		            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5, 5, 5, 5, false, false, false, false))));
+		}
 	}
 
 }

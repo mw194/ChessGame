@@ -34,7 +34,6 @@ public class Bishop extends ChessPiece
 						if (nextX == x - i && nextY == y - i && board[x - i][y - i].getColor() != color) {
 							return true;
 						}
-						System.out.println("Figur im Weg");
 						return false;
 					}
 					if (nextX == x - i && nextY == y - i) {
@@ -48,7 +47,6 @@ public class Bishop extends ChessPiece
 						if (nextX == x - i && nextY == y + i && board[x - i][y + i].getColor() != color) {
 							return true;
 						}
-						System.out.println("Figur im Weg");
 						return false;
 					}
 					if (nextX == x - i && nextY == y + i) {
@@ -65,7 +63,6 @@ public class Bishop extends ChessPiece
 						if (nextX == x + i && nextY == y - i && board[x + i][y - i].getColor() != color) {
 							return true;
 						}
-						System.out.println("Figur im Weg");
 						return false;
 					}
 					if (nextX == x + i && nextY == y - i) {
@@ -79,7 +76,6 @@ public class Bishop extends ChessPiece
 						if (nextX == x + i && nextY == y + i && board[x + i][y + i].getColor() != color) {
 							return true;
 						}
-						System.out.println("Figur im Weg");
 						return false;
 					}
 					if (nextX == x + i && nextY == y + i) {

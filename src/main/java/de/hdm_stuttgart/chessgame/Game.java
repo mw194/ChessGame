@@ -16,7 +16,7 @@ public class Game
 	ChessPiece[][] board = new ChessPiece[8][8]; // Board
 	public ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
 	public ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
-	private ChessPiece selectedPiece;
+	public ChessPiece selectedPiece;
 	private int turn = 0;
 	private final IDisplay display;
 
@@ -122,7 +122,6 @@ public class Game
 	 * @param currentY Horizontal coordinate of the field clicked
 	 */
 	public void select(int currentX, int currentY) {
-
 		if (selectedPiece == null) // no selected piece
 		{
 			if (board[currentX][currentY] == null || board[currentX][currentY].getColor() != getCurrentTeam()) {
@@ -130,8 +129,19 @@ public class Game
 				return;
 			}
 			selectedPiece = board[currentX][currentY]; // Piece gets selected
-
 		} else {
+			if(selectedPiece.getX() == currentX && selectedPiece.getY() == currentY){
+				selectedPiece = null;
+				return;
+			}
+			
+			if(board[currentX][currentY] != null){
+				if(selectedPiece.getColor() == board[currentX][currentY].getColor()){
+				selectedPiece = null;
+				return;
+				}
+			}
+			
 			if (board[currentX][currentY] == null || board[currentX][currentY].getColor() != getCurrentTeam()) {
 				move(currentX, currentY);
 			}
