@@ -17,19 +17,29 @@
     	-fx-pref-width: 150px;	    
 }
 
+#board {
+	    -fx-background-image: url("chessboard.jpg");
+}
+
 .label {
 	-fx-font-family : "Lucida Grande", sans-serif;
 	-fx-font-size: 30px;
 }
 
-.button{
+.field{
     -fx-border-color: transparent;
     -fx-border-width: 0;
     -fx-background-radius: 0;
     -fx-background-color: transparent;
     -fx-font-family:"Lucida Grande", Helvetica, Arial, sans-serif;
-    -fx-font-size: 1em; /* 12 */
+    -fx-font-size: 1em;
     -fx-text-fill: #828282;
+}
+
+.toolbar {
+	-fx-padding: 2px 4px;
+	-fx-pref-height: 20px;	
+	-fx-font-size: 1em;
 }
 
 .button:pressed {	

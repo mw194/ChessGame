@@ -16,9 +16,12 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
@@ -85,6 +88,7 @@ public class GUIDisplay extends Application implements IDisplay
 		});       
         root.getChildren().add(buttonStart);
         
+        
         Button buttonOptionen = new Button("Options");
         buttonOptionen.setAlignment(Pos.TOP_LEFT);
         buttonOptionen.setPrefWidth(150);
@@ -92,6 +96,7 @@ public class GUIDisplay extends Application implements IDisplay
         AnchorPane.setBottomAnchor(buttonOptionen, 50.0);
         buttonOptionen.getStyleClass().add("StartButton");
         root.getChildren().add(buttonOptionen);
+        
         
         Button buttonEnd = new Button("Quit");
         buttonEnd.setAlignment(Pos.TOP_LEFT);
@@ -105,53 +110,84 @@ public class GUIDisplay extends Application implements IDisplay
 				}
 		});
         root.getChildren().add(buttonEnd);
+        
         	
         scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());   
         primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		Stage gameStage = new Stage();
+		primaryStage.close();
+		try {
+			game(gameStage, game);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void game(Stage gameStage, Game game) throws Exception {
-		Pane canvas = new Pane();
+		BorderPane canvas = new BorderPane();	
 		Group pieces = new Group();
-		
-		Image board = new Image("/de/hdm_stuttgart/chessgame/GUIresources/chessboard.png");
-		ImageView iv1 = new ImageView();
-		iv1.setImage(board);
-		canvas.getChildren().add(iv1);
 
-		update(canvas, game, pieces);
+		//Toolbar////////////////
+		Button file = new Button("File");
+		file.getStyleClass().add("toolbar");
+		file.setAlignment(Pos.TOP_LEFT);
+		Button options = new Button("Options");
+		options.getStyleClass().add("toolbar");
+		options.setAlignment(Pos.TOP_LEFT);
+		Button help = new Button("Help");
+		help.getStyleClass().add("toolbar");
+		help.setAlignment(Pos.TOP_LEFT);
+		ToolBar top = new ToolBar(file, options, help);
+		//Chessboard/////////////
+		GridPane center = new GridPane();
+		center.setId("board");
+		//Bottombar//////////////
+		Label bot = new Label("v. 2.405.2a alpha");
+		bot.setStyle("-fx-font: .7em courier;");
 
 
 		for (int row = 0; row < 8; row++) {
 			for (int column = 0; column < 8; column++) {
 				Button button = new Button();
-				button.setLayoutX(column * 75);
-				button.setLayoutY(row * 75);
 				button.setPrefWidth(75);
 				button.setPrefHeight(75);
+		        button.getStyleClass().add("field");         
+		        int x = column;
+		        int y = row;
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
-						game.select((int) button.getLayoutY() / 75, (int) button.getLayoutX() / 75);
+						game.select(x, y);
 						pieces.getChildren().clear();
-						update(canvas, game, pieces);
 					}
 				});
-				canvas.getChildren().add(button);
+				center.add(button, row, column);
 			}
 		}
-
-         Scene scene = new Scene(canvas);
-
-         scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());      
-
-         gameStage.setTitle("Chess");
-         gameStage.setScene(scene); 
-         gameStage.setWidth(600);
-         gameStage.setHeight(800);
-         gameStage.show(); 
+		
+		
+		
+		
+		
+			
+		
+		
+		canvas.setTop(top);
+		canvas.setCenter(center);
+		canvas.setBottom(new ToolBar(bot));
+		
+		Scene scene = new Scene(canvas);
+		scene.getStylesheets().addAll(
+		this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
+		gameStage.setTitle("Chess");
+		gameStage.setScene(scene);
+		gameStage.setWidth(600);
+		gameStage.setHeight(800);
+		gameStage.setResizable(false);
+		gameStage.show();
 	}
 	
 	public void update(Pane canvas, Game game, Group pieces) {
