@@ -13,8 +13,19 @@
 	-fx-font-size: 5.5em;
 }
 
-#button{
-    	-fx-pref-width: 150px;	    
+.StartButton {
+    -fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
+    	-fx-text-fill: white;
+    	-fx-font-size: 1.2em;
+  	-fx-background-radius: null;
+  	}
+
+.StartButton:hover:pressed {
+    -fx-background-color: linear-gradient(to right, rgba(20,20, 20, 0.7), rgba(20,20, 20, 0.7), rgba(20,20, 20, 0.0));
+}
+
+.StartButton:pressed {
+    -fx-background-color: linear-gradient(to right, rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.0));
 }
 
 #board {
@@ -22,6 +33,17 @@
     -fx-background-repeat: no-repeat;
     -fx-background-size: contain; 
 }
+
+#top {
+	-fx-background-image: url("top.jpg");	
+}
+
+#left {
+	-fx-background-image: url("left.jpg");	
+    -fx-background-position: top left;
+    -fx-background-repeat: no-repeat;	
+}
+
 
 .label {
 	-fx-font-family : "Lucida Grande", sans-serif;
@@ -34,17 +56,7 @@
 	-fx-font-size: 1em;
 }
 
-.button:pressed {	
+/*.button:pressed {	
     -fx-background-color: grey;
-}
+}*/
 
-.StartButton {
-    -fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
-    	-fx-text-fill: white;
-    	-fx-font-size: 1.2em;
-  	-fx-background-radius: null;
-  	}
-
-.StartButton:pressed {
-    -fx-background-color: linear-gradient(to right, rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.0));	
-}

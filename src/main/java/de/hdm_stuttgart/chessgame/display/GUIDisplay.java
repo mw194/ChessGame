@@ -68,18 +68,16 @@ public class GUIDisplay extends Application implements IDisplay
 		// Check status
 	}
 
+	/**
+	 *Startmenu
+	 */
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{			
-		AnchorPane root = new AnchorPane();
-		root.setId("startscreen");
-		Scene scene = new Scene(root, 280, 280);
-
-		Label title = new Label("Chess");
-		title.setId("title");
-		AnchorPane.setLeftAnchor(title, 10.0);
-		root.getChildren().add(title);
+		AnchorPane menuPane = new AnchorPane();
+		menuPane.setId("startscreen");
 		
+		/////STARTBUTTON/////////////////////////
         Button buttonStart = new Button("Start new Game");
         buttonStart.setAlignment(Pos.TOP_LEFT);
         buttonStart.setPrefWidth(150);
@@ -88,27 +86,27 @@ public class GUIDisplay extends Application implements IDisplay
         buttonStart.getStyleClass().add("StartButton");   
 		buttonStart.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent event) {
-				Stage gameStage = new Stage();
 				primaryStage.close();
-				try {
-					game(gameStage, game);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+					try {
+						game();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 			}
 		});       
-        root.getChildren().add(buttonStart);
-        
-        
+		/////OPTIONSBUTTON/////////////////////////      
         Button buttonOptionen = new Button("Options");
         buttonOptionen.setAlignment(Pos.TOP_LEFT);
         buttonOptionen.setPrefWidth(150);
         AnchorPane.setLeftAnchor(buttonOptionen, 10.0);
         AnchorPane.setBottomAnchor(buttonOptionen, 50.0);
         buttonOptionen.getStyleClass().add("StartButton");
-        root.getChildren().add(buttonOptionen);
-        
-        
+		buttonOptionen.setOnAction(new EventHandler<ActionEvent>() {
+			public void handle(ActionEvent event) {
+				//TO DO
+			}
+		});  
+		/////QUITBUTTON///////////////////////// //          
         Button buttonEnd = new Button("Quit");
         buttonEnd.setAlignment(Pos.TOP_LEFT);
         buttonEnd.setPrefWidth(150);
@@ -120,9 +118,16 @@ public class GUIDisplay extends Application implements IDisplay
 		        Platform.exit();
 				}
 		});
-        root.getChildren().add(buttonEnd);
+		//////////////////////////////////////////   
+		
+
+		Label title = new Label("Chess");
+		title.setId("title");
+		AnchorPane.setLeftAnchor(title, 10.0);
+		
+        menuPane.getChildren().addAll(title, buttonStart, buttonOptionen, buttonEnd);
         
-        	
+		Scene scene = new Scene(menuPane, 280, 280);     	
         scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());   
         primaryStage.setTitle("Chess");
         primaryStage.setResizable(false);
@@ -130,28 +135,50 @@ public class GUIDisplay extends Application implements IDisplay
 		primaryStage.show();
 	}
 
-	public void game(Stage gameStage, Game game) throws Exception {
+	/**
+	 * Chess Game
+	 * @throws Exception
+	 */
+	public void game() throws Exception {
+		Stage gameStage = new Stage();
+
 		BorderPane canvas = new BorderPane();	
 
 		//Toolbar////////////////
-		Button file = new Button("File");
-		file.getStyleClass().add("toolbar");
-		file.setAlignment(Pos.TOP_LEFT);
-		Button options = new Button("Options");
-		options.getStyleClass().add("toolbar");
-		options.setAlignment(Pos.TOP_LEFT);
-		Button help = new Button("Help");
-		help.getStyleClass().add("toolbar");
-		help.setAlignment(Pos.TOP_LEFT);
-		ToolBar top = new ToolBar(file, options, help);
+		Button buttonFile = new Button("File");
+		buttonFile.getStyleClass().add("toolbar");
+		buttonFile.setAlignment(Pos.TOP_LEFT);
+		
+		Button buttonOptions = new Button("Options");
+		buttonOptions.getStyleClass().add("toolbar");
+		buttonOptions.setAlignment(Pos.TOP_LEFT);
+		
+		Button buttonHelp = new Button("Help");
+		buttonHelp.getStyleClass().add("toolbar");
+		buttonHelp.setAlignment(Pos.TOP_LEFT);
+		
+		ToolBar top = new ToolBar(buttonFile, buttonOptions, buttonHelp);
 		//Chessboard/////////////
-		GridPane center = new GridPane();
-		center.setId("board");
-		//Bottombar//////////////
+		BorderPane board = new BorderPane();
+		GridPane boardPane = new GridPane();
+		boardPane.setId("board");
+		
+		HBox topSide = new HBox();
+		topSide.setPrefHeight(20);
+		topSide.setId("top");
+		
+		VBox leftSide = new VBox();
+		leftSide.setId("left");
+		leftSide.setPrefWidth(20);
+		
+		board.setTop(topSide);
+		board.setLeft(leftSide);
+		board.setCenter(boardPane);
+		//BottomBar//////////////
 		Label bot = new Label("v. 2.405.2a alpha");
 		bot.setStyle("-fx-font: .7em courier;");
+		/////////////////////////
 
-		
 		for (int row = 0; row < 8; row++) {
 			for (int column = 0; column < 8; column++) {
 				Button button = new Button();
@@ -164,35 +191,41 @@ public class GUIDisplay extends Application implements IDisplay
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						game.select(x, y);
-						update(center, game);
+						update(boardPane);
 					}
 				});			
-				center.add(button, row, column);
+				boardPane.add(button, row, column);
 			}
 		}
+
+		
 		
 		canvas.setTop(top);
-		canvas.setCenter(center);
+		canvas.setCenter(board);
 		canvas.setBottom(new ToolBar(bot));
 
-		update(center, game);
+		update(boardPane);
 		
 		Scene scene = new Scene(canvas);
-		scene.getStylesheets().addAll(
-		this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
+		scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
 		gameStage.setTitle("Chess");
 		gameStage.setScene(scene);
-		gameStage.setWidth(600);
+		gameStage.setWidth(620);
 		gameStage.setHeight(800);
-		gameStage.setResizable(true);
+		gameStage.setResizable(false);
 		gameStage.show();
 	}
 	
-	public void update(GridPane center, Game game) {
-		for (Node button : center.getChildren()) { //Clear all textures
-			button.setStyle("-fx-background-image: none;"
-						  + "-fx-background-color: transparent;");
-			((Button)button).setBorder(null);
+	public void update(GridPane center) {
+		for (Node b : center.getChildren()) { // Clear all textures
+			if (b instanceof Button) {
+				b.setStyle("-fx-background-image: none;" 
+						 + "-fx-background-color: transparent;");
+				((Button) b).setBorder(null);
+			} 
+			else if(b instanceof Label) {
+				((Label) b).setText("");
+			}
 		}
 		
 
@@ -244,10 +277,7 @@ public class GUIDisplay extends Application implements IDisplay
 							+ "-fx-background-image: url('" + s + "'); "
 							+ "-fx-background-size: 50px;" 
 							+ "-fx-background-repeat: no-repeat;"
-							+ "-fx-background-position: center;");
-			
-			
-			
+							+ "-fx-background-position: center;");		
 		}
 		
 		if (game.selectedPiece != null) {
@@ -255,6 +285,11 @@ public class GUIDisplay extends Application implements IDisplay
 			((Button)center.getChildren().get(indexSelected)).setBorder(new Border(new BorderStroke(Color.BLACK, 
 		            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5, 5, 5, 5, false, false, false, false))));
 		}
+
+		Label text = new Label("Current Player: " + game.getCurrentTeam());
+		center.add(text, 0, 8, 5, 1);
+		Label text2 = new Label("Move: " + game.getMove());
+		center.add(text2, 6, 8, 3, 1);
 	}
 
 }

@@ -17,7 +17,7 @@ public class Game
 	public ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
 	public ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	public ChessPiece selectedPiece;
-	private int turn = 0;
+	private int move = 0;
 	private final IDisplay display;
 
 	public Game(IDisplay display)
@@ -70,7 +70,7 @@ public class Game
 	 */
 	public EnumPieceColor getCurrentTeam()
 	{
-		if (turn % 2 == 0)
+		if (move % 2 == 0)
 		{
 			return EnumPieceColor.WHITE;
 		} else
@@ -79,6 +79,13 @@ public class Game
 		}
 	}
 
+	/**
+	 * @return The move
+	 */
+	public int getMove() {
+		return move;
+	}
+	
 	/**
 	 * Repopulates the game board with all chess pieces
 	 */
@@ -168,7 +175,7 @@ public class Game
 
 			selectedPiece.move(xNew, yNew);
 			selectedPiece = null;
-			turn++;
+			move++;
 			update();
 		} else {
 			System.out.println("Kann nicht dahin");
