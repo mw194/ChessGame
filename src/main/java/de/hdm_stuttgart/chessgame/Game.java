@@ -80,7 +80,6 @@ public class Game
 	}
 
 	/**
-	 * @return The move
 	 */
 	public int getMove() {
 		return move;
@@ -140,15 +139,12 @@ public class Game
 			if(selectedPiece.getX() == currentX && selectedPiece.getY() == currentY){
 				selectedPiece = null;
 				return;
-			}
-			
+			}		
 			if(board[currentX][currentY] != null){
-				if(selectedPiece.getColor() == board[currentX][currentY].getColor()){
-				selectedPiece = null;
-				return;
+				if(board[currentX][currentY].getColor() == selectedPiece.getColor()){
+					selectedPiece = board[currentX][currentY];
 				}
-			}
-			
+			}		
 			if (board[currentX][currentY] == null || board[currentX][currentY].getColor() != getCurrentTeam()) {
 				move(currentX, currentY);
 			}
@@ -213,7 +209,7 @@ public class Game
 	 * 1 := white king dead -> black wins
 	 * @return code for different options
 	 */
-	private int checkmate() //DE: Schachmatt
+	public int checkmate() //DE: Schachmatt
 	{
 		final AtomicInteger atInt = new AtomicInteger(0); // Have to use AtomicInteger because this object has to be final
 
@@ -249,7 +245,7 @@ public class Game
 	 * @param color The king to check
 	 * @return Is the king in check?
 	 */
-	private boolean checkCheck(EnumPieceColor color) //DE: Im Schach stehen
+	public boolean checkCheck(EnumPieceColor color) //DE: Im Schach stehen
 	{
 		if (color == EnumPieceColor.WHITE)
 		{

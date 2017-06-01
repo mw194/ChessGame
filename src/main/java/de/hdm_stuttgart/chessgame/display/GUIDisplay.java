@@ -191,7 +191,7 @@ public class GUIDisplay extends Application implements IDisplay
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						game.select(x, y);
-						update(boardPane);
+						update(boardPane, gameStage);
 					}
 				});			
 				boardPane.add(button, row, column);
@@ -204,7 +204,7 @@ public class GUIDisplay extends Application implements IDisplay
 		canvas.setCenter(board);
 		canvas.setBottom(new ToolBar(bot));
 
-		update(boardPane);
+		update(boardPane, gameStage);
 		
 		Scene scene = new Scene(canvas);
 		scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
@@ -216,7 +216,7 @@ public class GUIDisplay extends Application implements IDisplay
 		gameStage.show();
 	}
 	
-	public void update(GridPane center) {
+	public void update(GridPane center, Stage gameStage) {
 		for (Node b : center.getChildren()) { // Clear all textures
 			if (b instanceof Button) {
 				b.setStyle("-fx-background-image: none;" 
@@ -290,6 +290,44 @@ public class GUIDisplay extends Application implements IDisplay
 		center.add(text, 0, 8, 5, 1);
 		Label text2 = new Label("Move: " + game.getMove());
 		center.add(text2, 6, 8, 3, 1);
+		
+		if (game.checkmate() == 2) {
+			return;
+		} else {
+			Stage winStage = new Stage();
+			AnchorPane root = new AnchorPane();
+			Label winLabel = new Label("Black Wins!");
+			if(game.checkmate() == 2){
+				winLabel.setText("White Wins!");
+			}
+			winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
+			AnchorPane.setTopAnchor(winLabel, 10.0);
+			AnchorPane.setLeftAnchor(winLabel, 10.0);
+			
+			Button winButton = new Button("Back to menu");			
+			AnchorPane.setBottomAnchor(winButton, 10.0);
+			AnchorPane.setLeftAnchor(winButton, 70.0);
+			winButton.setOnAction(new EventHandler<ActionEvent>() {			
+				@Override
+				public void handle(ActionEvent event) {
+					gameStage.close();
+					winStage.close();
+					try {
+						start(new Stage());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			});	
+		
+			root.getChildren().addAll(winLabel, winButton);
+
+			
+			Scene scene = new Scene(root, 235, 150);
+			winStage.setScene(scene);
+			winStage.setResizable(false);
+			winStage.show();
+		}
 	}
 
 }
