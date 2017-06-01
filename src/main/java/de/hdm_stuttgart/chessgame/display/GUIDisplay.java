@@ -59,7 +59,39 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void processCheckmate(EnumPieceColor winner)
 	{
-		// End game
+		Stage winStage = new Stage();
+		AnchorPane root = new AnchorPane();
+		Label winLabel = new Label("Black Wins!");
+		if(game.checkmate() == 2){
+			winLabel.setText("White Wins!");
+		}
+		winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
+		AnchorPane.setTopAnchor(winLabel, 10.0);
+		AnchorPane.setLeftAnchor(winLabel, 10.0);
+		
+		Button winButton = new Button("Back to menu");			
+		AnchorPane.setBottomAnchor(winButton, 10.0);
+		AnchorPane.setLeftAnchor(winButton, 70.0);
+		winButton.setOnAction(new EventHandler<ActionEvent>() {			
+			@Override
+			public void handle(ActionEvent event) {
+//				gameStage.close();
+				winStage.close();
+				try {
+					start(new Stage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});	
+	
+		root.getChildren().addAll(winLabel, winButton);
+
+		
+		Scene scene = new Scene(root, 235, 150);
+		winStage.setScene(scene);
+		winStage.setResizable(false);
+		winStage.show();
 	}
 
 	@Override
@@ -262,72 +294,32 @@ public class GUIDisplay extends Application implements IDisplay
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_black.png";
 			if (p instanceof Queen) 
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_black.png";
-			if (p instanceof King) 
+			if (p instanceof King)
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/King_black.png";
-			if (p instanceof Bishop) 
+			if (p instanceof Bishop)
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png";
-			if (p instanceof Knight) 
+			if (p instanceof Knight)
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png";
-			if (p instanceof Rook) 
+			if (p instanceof Rook)
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png";
 
 			int index = p.getY() * 8 + p.getX();
-			center.getChildren().get(index).setStyle(
-							"-fx-background-color: transparent;" 
-							+ "-fx-background-image: url('" + s + "'); "
-							+ "-fx-background-size: 50px;" 
-							+ "-fx-background-repeat: no-repeat;"
-							+ "-fx-background-position: center;");		
+			center.getChildren().get(index)
+					.setStyle("-fx-background-color: transparent;" + "-fx-background-image: url('" + s + "'); "
+							+ "-fx-background-size: 50px;" + "-fx-background-repeat: no-repeat;"
+							+ "-fx-background-position: center;");
 		}
-		
+
 		if (game.selectedPiece != null) {
 			int indexSelected = game.selectedPiece.getY() * 8 + game.selectedPiece.getX();
-			((Button)center.getChildren().get(indexSelected)).setBorder(new Border(new BorderStroke(Color.BLACK, 
-		            BorderStrokeStyle.SOLID, CornerRadii.EMPTY, new BorderWidths(5, 5, 5, 5, false, false, false, false))));
+			((Button) center.getChildren().get(indexSelected))
+					.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+							new BorderWidths(5, 5, 5, 5, false, false, false, false))));
 		}
 
 		Label text = new Label("Current Player: " + game.getCurrentTeam());
 		center.add(text, 0, 8, 5, 1);
 		Label text2 = new Label("Move: " + game.getMove());
 		center.add(text2, 6, 8, 3, 1);
-		
-		if (game.checkmate() == 2) {
-			return;
-		} else {
-			Stage winStage = new Stage();
-			AnchorPane root = new AnchorPane();
-			Label winLabel = new Label("Black Wins!");
-			if(game.checkmate() == 2){
-				winLabel.setText("White Wins!");
-			}
-			winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
-			AnchorPane.setTopAnchor(winLabel, 10.0);
-			AnchorPane.setLeftAnchor(winLabel, 10.0);
-			
-			Button winButton = new Button("Back to menu");			
-			AnchorPane.setBottomAnchor(winButton, 10.0);
-			AnchorPane.setLeftAnchor(winButton, 70.0);
-			winButton.setOnAction(new EventHandler<ActionEvent>() {			
-				@Override
-				public void handle(ActionEvent event) {
-					gameStage.close();
-					winStage.close();
-					try {
-						start(new Stage());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});	
-		
-			root.getChildren().addAll(winLabel, winButton);
-
-			
-			Scene scene = new Scene(root, 235, 150);
-			winStage.setScene(scene);
-			winStage.setResizable(false);
-			winStage.show();
-		}
 	}
-
 }
