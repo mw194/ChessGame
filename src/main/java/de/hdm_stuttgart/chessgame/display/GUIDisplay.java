@@ -1,31 +1,21 @@
 package de.hdm_stuttgart.chessgame.display;
 
-import javax.swing.JLabel;
-
 import de.hdm_stuttgart.chessgame.Game;
 import de.hdm_stuttgart.chessgame.pieces.*;
-import de.hdm_stuttgart.chessgame.GUIresources.*;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.ToolBar;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.BorderStroke;
@@ -34,15 +24,13 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-@SuppressWarnings("restriction")
 public class GUIDisplay extends Application implements IDisplay
 {
-	Game game = new Game(this);
+	Game game;
 
 	@Override
 	public void processUpdate(ChessPiece[][] gameBoard, EnumPieceColor currentTeam)
@@ -59,39 +47,7 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void processCheckmate(EnumPieceColor winner)
 	{
-		Stage winStage = new Stage();
-		AnchorPane root = new AnchorPane();
-		Label winLabel = new Label("Black Wins!");
-		if(game.checkmate() == 2){
-			winLabel.setText("White Wins!");
-		}
-		winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
-		AnchorPane.setTopAnchor(winLabel, 10.0);
-		AnchorPane.setLeftAnchor(winLabel, 10.0);
 		
-		Button winButton = new Button("Back to menu");			
-		AnchorPane.setBottomAnchor(winButton, 10.0);
-		AnchorPane.setLeftAnchor(winButton, 70.0);
-		winButton.setOnAction(new EventHandler<ActionEvent>() {			
-			@Override
-			public void handle(ActionEvent event) {
-//				gameStage.close();
-				winStage.close();
-				try {
-					start(new Stage());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});	
-	
-		root.getChildren().addAll(winLabel, winButton);
-
-		
-		Scene scene = new Scene(root, 235, 150);
-		winStage.setScene(scene);
-		winStage.setResizable(false);
-		winStage.show();
 	}
 
 	@Override
@@ -100,6 +56,39 @@ public class GUIDisplay extends Application implements IDisplay
 		// Check status
 	}
 
+	private void checkCheck(Stage gameStage) {
+		Stage winStage = new Stage();
+		VBox root = new VBox();
+		root.setAlignment(Pos.CENTER);
+		root.setSpacing(10);
+		
+		Label winLabel = new Label("Black Wins!");
+		if (game.checkmate() == 2) {
+			winLabel.setText("White Wins!");
+		}
+		winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
+		Button winButton = new Button("Back to menu");
+		root.getChildren().addAll(winLabel, winButton);
+
+		winButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				gameStage.close();
+				winStage.close();
+				try {
+					start(new Stage());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		Scene scene = new Scene(root, 250, 120);
+		winStage.setScene(scene);
+		winStage.setResizable(false);
+		winStage.show();
+	}
+	
 	/**
 	 *Startmenu
 	 */
@@ -120,6 +109,7 @@ public class GUIDisplay extends Application implements IDisplay
 			public void handle(ActionEvent event) {
 				primaryStage.close();
 					try {
+						game = new Game(new GUIDisplay());
 						game();
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -206,11 +196,26 @@ public class GUIDisplay extends Application implements IDisplay
 		board.setTop(topSide);
 		board.setLeft(leftSide);
 		board.setCenter(boardPane);
-		//BottomBar//////////////
-		Label bot = new Label("v. 2.405.2a alpha");
-		bot.setStyle("-fx-font: .7em courier;");
-		/////////////////////////
+		//Bottom//////////////
+		VBox bottom = new VBox();
 
+		StringProperty statusString = new SimpleStringProperty();
+		StringProperty currentString = new SimpleStringProperty();
+		StringProperty moveString = new SimpleStringProperty();
+
+		Label statusLabel = new Label();
+		statusLabel.textProperty().bind(statusString);
+		Label currentLabel = new Label("Current Player: ");
+		currentLabel.textProperty().bind(currentString);
+		Label moveLabel = new Label("Move: ");
+		moveLabel.textProperty().bind(moveString);
+	
+		bottom.getChildren().addAll(statusLabel, currentLabel, moveLabel);
+		bottom.setPrefHeight(126);
+		bottom.setPadding(new Insets(0, 0, 0, 20));
+		/////////////////////////
+		
+		
 		for (int row = 0; row < 8; row++) {
 			for (int column = 0; column < 8; column++) {
 				Button button = new Button();
@@ -223,20 +228,19 @@ public class GUIDisplay extends Application implements IDisplay
 				button.setOnAction(new EventHandler<ActionEvent>() {
 					public void handle(ActionEvent event) {
 						game.select(x, y);
-						update(boardPane, gameStage);
+						update(boardPane, gameStage, statusString, currentString, moveString);
 					}
 				});			
 				boardPane.add(button, row, column);
 			}
 		}
 
-		
-		
+
 		canvas.setTop(top);
 		canvas.setCenter(board);
-		canvas.setBottom(new ToolBar(bot));
+		canvas.setBottom(bottom);
 
-		update(boardPane, gameStage);
+		update(boardPane, gameStage, statusString, currentString, moveString);
 		
 		Scene scene = new Scene(canvas);
 		scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
@@ -248,16 +252,19 @@ public class GUIDisplay extends Application implements IDisplay
 		gameStage.show();
 	}
 	
-	public void update(GridPane center, Stage gameStage) {
+	public void update(GridPane center, Stage gameStage, StringProperty statusString, StringProperty currentString, StringProperty moveString ) {
+		if (game.checkmate() != 3) {
+			checkCheck(gameStage);
+		}
+
+		statusString.set("Hier muss der Status stehen");
+		currentString.set("Current Team: " + game.getCurrentTeam().toString());
+		moveString.set("Move counter: " + game.getMove());
+
 		for (Node b : center.getChildren()) { // Clear all textures
-			if (b instanceof Button) {
 				b.setStyle("-fx-background-image: none;" 
 						 + "-fx-background-color: transparent;");
 				((Button) b).setBorder(null);
-			} 
-			else if(b instanceof Label) {
-				((Label) b).setText("");
-			}
 		}
 		
 
@@ -300,7 +307,7 @@ public class GUIDisplay extends Application implements IDisplay
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png";
 			if (p instanceof Knight)
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png";
-			if (p instanceof Rook)
+			if (p instanceof Rook) 	
 				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png";
 
 			int index = p.getY() * 8 + p.getX();
@@ -314,12 +321,7 @@ public class GUIDisplay extends Application implements IDisplay
 			int indexSelected = game.selectedPiece.getY() * 8 + game.selectedPiece.getX();
 			((Button) center.getChildren().get(indexSelected))
 					.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-							new BorderWidths(5, 5, 5, 5, false, false, false, false))));
-		}
-
-		Label text = new Label("Current Player: " + game.getCurrentTeam());
-		center.add(text, 0, 8, 5, 1);
-		Label text2 = new Label("Move: " + game.getMove());
-		center.add(text2, 6, 8, 3, 1);
+							new BorderWidths(6, 6, 6, 6, false, false, false, false))));
+		}		
 	}
 }

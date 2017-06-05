@@ -1,25 +1,28 @@
 * {
- 	-fx-font-family:"Didot", TimesNewRoman, 'Times New Roman', serif;	
+ 	-fx-font-family: "Times new Roman";
+ 	-fx-font-family: "Didot";
 }
 
+/* StartMenu */ 
+
 #startscreen{
-    -fx-background-image: url("testimage.jpg");
+    -fx-background-image: url("startscreen.jpg");
     -fx-background-size: 300 300;
     -fx-background-position: center center;
 }
 
 #title {
-    	-fx-text-fill: white;
+    -fx-text-fill: white;
 	-fx-font-size: 5.5em;
 }
 
 .StartButton {
     -fx-background-color: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.0));
-    	-fx-text-fill: white;
-    	-fx-font-size: 1.2em;
+    -fx-text-fill: white;
+    -fx-font-size: 1.2em;
   	-fx-background-radius: null;
   	}
-
+  	
 .StartButton:hover:pressed {
     -fx-background-color: linear-gradient(to right, rgba(20,20, 20, 0.7), rgba(20,20, 20, 0.7), rgba(20,20, 20, 0.0));
 }
@@ -27,6 +30,8 @@
 .StartButton:pressed {
     -fx-background-color: linear-gradient(to right, rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.8), rgba(20,20, 20, 0.0));
 }
+
+/* Game */
 
 #board {
     -fx-background-image: url("chessboard.png");
@@ -40,23 +45,14 @@
 
 #left {
 	-fx-background-image: url("left.jpg");	
-    -fx-background-position: top left;
-    -fx-background-repeat: no-repeat;	
-}
-
-
-.label {
-	-fx-font-family : "Lucida Grande", sans-serif;
-	-fx-font-size: 30px;
 }
 
 .toolbar {
 	-fx-padding: 2px 4px;
 	-fx-pref-height: 20px;	
-	-fx-font-size: 1em;
 }
 
-/*.button:pressed {	
-    -fx-background-color: grey;
-}*/
+.label {
+	-fx-font-size: 2.4em;
+}
 
