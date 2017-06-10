@@ -294,28 +294,32 @@ public class GUIDisplay extends Application implements IDisplay
 							+ "-fx-background-position: center;");
 		}
 
-		for (ChessPiece p : game.blackPieces) {
-			String s = "";
+		synchronized (game.threadLock)
+		{
+			for (ChessPiece p : game.blackPieces) {
+				String s = "";
 
-			if (p instanceof Pawn) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_black.png";
-			if (p instanceof Queen) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_black.png";
-			if (p instanceof King)
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/King_black.png";
-			if (p instanceof Bishop)
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png";
-			if (p instanceof Knight)
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png";
-			if (p instanceof Rook) 	
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png";
+				if (p instanceof Pawn) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_black.png";
+				if (p instanceof Queen) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_black.png";
+				if (p instanceof King)
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/King_black.png";
+				if (p instanceof Bishop)
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_black.png";
+				if (p instanceof Knight)
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_black.png";
+				if (p instanceof Rook) 	
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_black.png";
 
-			int index = p.getY() * 8 + p.getX();
-			center.getChildren().get(index)
-					.setStyle("-fx-background-color: transparent;" + "-fx-background-image: url('" + s + "'); "
-							+ "-fx-background-size: 50px;" + "-fx-background-repeat: no-repeat;"
-							+ "-fx-background-position: center;");
+				int index = p.getY() * 8 + p.getX();
+				center.getChildren().get(index)
+						.setStyle("-fx-background-color: transparent;" + "-fx-background-image: url('" + s + "'); "
+								+ "-fx-background-size: 50px;" + "-fx-background-repeat: no-repeat;"
+								+ "-fx-background-position: center;");
+			}
 		}
+
 
 		if (game.selectedPiece != null) {
 			int indexSelected = game.selectedPiece.getY() * 8 + game.selectedPiece.getX();
