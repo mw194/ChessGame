@@ -1,6 +1,7 @@
 package de.hdm_stuttgart.chessgame.display;
 
 import de.hdm_stuttgart.chessgame.Game;
+import de.hdm_stuttgart.chessgame.Main;
 import de.hdm_stuttgart.chessgame.pieces.*;
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -31,7 +32,8 @@ import javafx.stage.Stage;
 public class GUIDisplay extends Application implements IDisplay
 {
 	Game game;
-
+	private StringProperty statusString;
+	
 	@Override
 	public void processUpdate(ChessPiece[][] gameBoard, EnumPieceColor currentTeam)
 	{
@@ -54,6 +56,12 @@ public class GUIDisplay extends Application implements IDisplay
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck)
 	{
 		// Check status
+	}
+	
+	@Override
+	public void processLogMessage(String message)
+	{
+		statusString.set(message);
 	}
 
 	private void checkCheck(Stage gameStage) {
@@ -95,6 +103,7 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void start(Stage primaryStage) throws Exception
 	{			
+		Main.setCurrentDisplay(this);
 		AnchorPane menuPane = new AnchorPane();
 		menuPane.setId("startscreen");
 		
@@ -171,15 +180,15 @@ public class GUIDisplay extends Application implements IDisplay
 		buttonFile.getStyleClass().add("toolbar");
 		buttonFile.setAlignment(Pos.TOP_LEFT);
 		
-		Button buttonOptions = new Button("Options");
-		buttonOptions.getStyleClass().add("toolbar");
-		buttonOptions.setAlignment(Pos.TOP_LEFT);
+//		Button buttonOptions = new Button("Options");
+//		buttonOptions.getStyleClass().add("toolbar");
+//		buttonOptions.setAlignment(Pos.TOP_LEFT);
+//		
+//		Button buttonHelp = new Button("Help");
+//		buttonHelp.getStyleClass().add("toolbar");
+//		buttonHelp.setAlignment(Pos.TOP_LEFT);
 		
-		Button buttonHelp = new Button("Help");
-		buttonHelp.getStyleClass().add("toolbar");
-		buttonHelp.setAlignment(Pos.TOP_LEFT);
-		
-		ToolBar top = new ToolBar(buttonFile, buttonOptions, buttonHelp);
+		ToolBar top = new ToolBar(buttonFile/*, buttonOptions, buttonHelp*/);
 		//Chessboard/////////////
 		BorderPane board = new BorderPane();
 		GridPane boardPane = new GridPane();
@@ -199,7 +208,7 @@ public class GUIDisplay extends Application implements IDisplay
 		//Bottom//////////////
 		VBox bottom = new VBox();
 
-		StringProperty statusString = new SimpleStringProperty();
+		statusString = new SimpleStringProperty();
 		StringProperty currentString = new SimpleStringProperty();
 		StringProperty moveString = new SimpleStringProperty();
 
@@ -257,7 +266,7 @@ public class GUIDisplay extends Application implements IDisplay
 			checkCheck(gameStage);
 		}
 
-		statusString.set("Hier muss der Status stehen");
+		//statusString.set("Hier muss der Status stehen");
 		currentString.set("Current Team: " + game.getCurrentTeam().toString());
 		moveString.set("Move counter: " + game.getMove());
 

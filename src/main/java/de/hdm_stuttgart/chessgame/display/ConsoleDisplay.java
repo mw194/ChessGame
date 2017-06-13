@@ -7,7 +7,7 @@ import de.hdm_stuttgart.chessgame.pieces.*;
  * Prints the game board to the console after every update.
  */
 public class ConsoleDisplay implements IDisplay
-{
+{	
 	@Override
 	public void processUpdate(ChessPiece[][] board, EnumPieceColor currentTeam)
 	{
@@ -52,5 +52,10 @@ public class ConsoleDisplay implements IDisplay
 		{
 			Main.getLog().info("Black is in check");
 		}
+	}
+
+	@Override
+	public void processLogMessage(String message)
+	{
 	}
 }
