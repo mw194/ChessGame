@@ -198,12 +198,14 @@ public class Game
 
 	/**
 	 * Removes a {@link de.hdm_stuttgart.chessgame.pieces.ChessPiece} from the board.
-	 * @param chessPiece The piece to remove.
+	 * @param x The piece's location on x axis
+	 * @param y The piece's location on y axis
 	 */
-	public void removePiece(ChessPiece chessPiece)
+	public void removePiece(int x, int y)
 	{
 		synchronized (threadLock)
 		{
+			ChessPiece chessPiece = board[x][y];
 			if (whitePieces.contains(chessPiece))
 			{
 				whitePieces.remove(chessPiece);

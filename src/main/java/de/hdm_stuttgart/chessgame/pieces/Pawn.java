@@ -13,10 +13,25 @@ public class Pawn extends ChessPiece
 	}
 
 	private int firstMove = 0; // 0-Not moved yet / 1 en passant / 2 
+	private boolean enPassantFlagged = false;
+	private int enPassantX = -1;
+	private int enPassantY = -1;
+	
+	@Override
+	public void move(int x, int y)
+	{
+		super.move(x, y);
+		if (enPassantFlagged)
+		{
+			enPassantFlagged = false;
+			Game.getCurrentInstance().removePiece(enPassantX, enPassantY);
+		}
+	}
 
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
+		enPassantFlagged = false;
 		if (nextX == x && nextY == y) // No movement
 		{
 			return false;
@@ -36,52 +51,69 @@ public class Pawn extends ChessPiece
 		{
 			return false;
 		}
-
-		if (firstMove == 0 && color == EnumPieceColor.WHITE){
-			if(x-2 == nextX && nextY == y && board[nextX][nextY] == null && board[nextX +1][nextY] == null){
-				firstMove++;
-				return true;
-			}
-		}
-
-		if(firstMove == 0 && color == EnumPieceColor.BLACK){
-			if(x+2 == nextX && nextY == y && board[nextX][nextY] == null && board[nextX -1][nextY] == null){
-				firstMove++;
-				return true;
-			}
-		}
-		if(Math.abs(nextX - x) > 1){
-			return false;
-		}
-		if(y != nextY){ //Beat enemy piece
-
-			if(Math.abs(nextY - y) != 1){
+		
+		int dX = nextX - x;
+		int dXa = Math.abs(dX);
+		
+		if (nextY == y)
+		{
+			if (board[nextX][nextY] != null)
+			{
 				return false;
 			}
-			if (board[nextX][nextY] != null && board[nextX][nextY].getColor() != color) {
+			
+			if (firstMove == 0)
+			{
+				if (dXa == 2)
+				{
+					if (board[nextX - (dX / 2)][nextY] == null)
+					{
+						firstMove++;
+						return true;
+					}
+				}
+			}
+			
+			if (dXa == 1)
+			{
+				firstMove++;
+				return true;
+			} else
+			{
+				return false;
+			}
+		} else
+		{
+			int dY = nextY - y;
+			int dYa = Math.abs(dY);
+			
+			if (dYa != 1 || dXa != 1) return false;
+			
+			if (board[x][nextY] != null)
+			{
+				if (board[x][nextY].getColor() != color)
+				{
+					if (board[x][nextY] instanceof Pawn)
+					{
+						if (((Pawn)board[x][nextY]).firstMove == 1)
+						{
+							enPassantFlagged = true;
+							enPassantX = x;
+							enPassantY = y;
+							firstMove++;
+							return true;
+						}
+					}
+				}
+			}
+			
+			if (board[nextX][nextY] != null && board[nextX][nextY].getColor() != color)
+			{
 				firstMove = 2;
 				return true;
 			}
-			//En Passant
-			if(board[x][nextY] != null && board[x][nextY].getColor() != color && board[x][nextY] instanceof Pawn ){
-				if(((Pawn)board[x][nextY]).firstMove == 1 ){
-					// TODO: This is kind of bad design, try to find a better solution.
-					// Proposal: override move and do stuff there?
-					Game.getCurrentInstance().removePiece(board[x][nextY]); 
-					firstMove++;
-					return true;
-				}
-			}
-			return false;
 		}
-
-
-		if (board[nextX][nextY] == null && nextX != x && nextY != y) // Filed is empty and chessPiece is moving diagonal
-		{  
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 
 	@Override
