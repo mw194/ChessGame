@@ -29,6 +29,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class GUIDisplay extends Application implements IDisplay
 {
 	Game game;
@@ -44,6 +45,7 @@ public class GUIDisplay extends Application implements IDisplay
 	public void processInvalidAction(String message)
 	{
 		// Problem Exists Between Keyboard And Chair
+		Main.logInfo(message);
 	}
 
 	@Override

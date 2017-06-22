@@ -11,9 +11,9 @@ public class Main
 
 	private static IDisplay display;
 	
+	@SuppressWarnings("restriction")
 	public static void main(String[] args)
 	{
-		//log.info("Test log message. Use this instead Sysout");
 		Application.launch(GUIDisplay.class, args);
 	}
 

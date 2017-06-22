@@ -191,7 +191,7 @@ public class Game
 			move++;
 			update();
 		} else {
-			System.out.println("Kann nicht dahin");
+			Main.logInfo("Kann nicht dahin.");
 			return;
 		}
 	}
