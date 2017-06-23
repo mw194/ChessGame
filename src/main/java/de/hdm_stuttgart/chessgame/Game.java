@@ -13,7 +13,7 @@ public class Game
 {
 	private static Game currentInstance;
 
-	ChessPiece[][] board = new ChessPiece[8][8]; // Board
+	private ChessPiece[][] board = new ChessPiece[8][8]; // Board
 	public ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
 	public ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	public ChessPiece selectedPiece;
@@ -309,5 +309,9 @@ public class Game
 	public boolean isFinished()
 	{
 		return finished;
+	}
+	
+	public ChessPiece[][] getBoard() {
+		return board;
 	}
 }
