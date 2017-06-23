@@ -6,6 +6,12 @@ package de.hdm_stuttgart.chessgame.pieces;
  */
 public class Bishop extends ChessPiece
 {
+	/**
+	 * creates a new bishop
+	 * @param color of the team (black or white)
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public Bishop(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);
@@ -14,7 +20,7 @@ public class Bishop extends ChessPiece
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
-		if (nextX == x && nextY == y) // No movement
+		if (nextX == x && nextY == y) // No movement -> not valid
 		{
 			return false;
 		}
@@ -22,7 +28,7 @@ public class Bishop extends ChessPiece
 		{
 			return false;
 		}
-		if (nextX == x || nextY == y) // Is moving horizontal or vertical
+		if (nextX == x || nextY == y) // Is moving horizontal or vertical -> not valid
 		{
 			return false;
 		}

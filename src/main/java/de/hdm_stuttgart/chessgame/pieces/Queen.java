@@ -6,6 +6,12 @@ package de.hdm_stuttgart.chessgame.pieces;
  */
 public class Queen extends ChessPiece
 {
+	/**
+	 * creates a new bishop
+	 * @param color of the team (black or white)
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public Queen(EnumPieceColor color, int x, int y) {
 		super(color, x, y);
 	}
@@ -22,44 +28,44 @@ public class Queen extends ChessPiece
 			return false;
 		}
 
-		
-		if (x == nextX || y == nextY) {
+		//The Following code is basically the canMove methods from rook/bishop combined
+		if (x == nextX || y == nextY) { //starts with the rook movement style check
 			if (nextX != x) // Movement in x direction
 			{
-				if (nextX > x) //Movement to bottom
+				if (nextX > x) // Movement to bottom
 				{
-					for (int i = nextX - 1; i > x; i--)
-					{
-						if (board[i][y] != null) return false;
+					for (int i = nextX - 1; i > x; i--) {
+						if (board[i][y] != null)
+							return false;
 					}
 					return true;
-				} else //Movement to top
+				} else // Movement to top
 				{
-					for (int i = nextX + 1; i < x; i++)
-					{
-						if (board[i][y] != null) return false;
+					for (int i = nextX + 1; i < x; i++) {
+						if (board[i][y] != null)
+							return false;
 					}
 					return true;
 				}
 			} else // Movement in y direction
 			{
-				if (nextY > y) //Movement to right
+				if (nextY > y) // Movement to right
 				{
-					for (int i = nextY - 1; i > y; i--)
-					{
-						if (board[x][i] != null) return false;
+					for (int i = nextY - 1; i > y; i--) {
+						if (board[x][i] != null)
+							return false;
 					}
 					return true;
-				} else //Movement to left
+				} else // Movement to left
 				{
-					for (int i = nextY + 1; i < y; i++)
-					{
-						if (board[x][i] != null) return false;
+					for (int i = nextY + 1; i < y; i++) {
+						if (board[x][i] != null)
+							return false;
 					}
 					return true;
 				}
 			}
-		} else {
+		} else { //Here starts the bishop movement style check
 			if (nextX < x) { // up
 				if (nextY < y) { // up left
 					for (int i = 1; x - i >= 0 && y - i >= 0; i++) {
@@ -116,9 +122,9 @@ public class Queen extends ChessPiece
 						}
 					}
 				}
-			}	
-			
-		}			
+			}
+
+		}
 		return false;
 	}
 

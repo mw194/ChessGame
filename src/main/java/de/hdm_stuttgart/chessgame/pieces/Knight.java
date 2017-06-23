@@ -5,6 +5,12 @@ package de.hdm_stuttgart.chessgame.pieces;
  */
 public class Knight extends ChessPiece
 {
+	/**
+	 * creates a new bishop
+	 * @param color of the team (black or white)
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public Knight(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);
@@ -13,7 +19,7 @@ public class Knight extends ChessPiece
 	@Override
 	public boolean canMove(int nextX, int nextY, ChessPiece[][] board)
 	{
-		if (nextX == x && nextY == y) // No movement
+		if (nextX == x && nextY == y) // No movement -> invalid
 		{
 			return false;
 		}

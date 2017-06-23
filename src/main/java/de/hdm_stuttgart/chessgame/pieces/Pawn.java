@@ -7,6 +7,12 @@ import de.hdm_stuttgart.chessgame.Game;
  */
 public class Pawn extends ChessPiece
 {
+	/**
+	 * creates a new bishop
+	 * @param color of the team (black or white)
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public Pawn(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);

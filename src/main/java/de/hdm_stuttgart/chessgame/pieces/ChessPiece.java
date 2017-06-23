@@ -1,10 +1,16 @@
 package de.hdm_stuttgart.chessgame.pieces;
 
-public abstract class ChessPiece
+/**
+ * abstract class for chesspieces 
+ * all different chesspieces extends this class
+ * the core methods are the movement itself and the
+ * check whether a move is valid or not
+ */
+public abstract class ChessPiece 
 {
-	protected EnumPieceColor color;	//color of Piece
-	protected int x;			//Current x coordinate
-	protected int y;			//Current y coordinate
+	protected EnumPieceColor color; // color of Piece
+	protected int x; // Current x coordinate
+	protected int y; // Current y coordinate
 
 	/**
 	 * @param color This piece's team

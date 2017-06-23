@@ -5,6 +5,12 @@ package de.hdm_stuttgart.chessgame.pieces;
  */
 public class Rook extends ChessPiece {
 
+	/**
+	 * creates a new bishop
+	 * @param color of the team (black or white)
+	 * @param x coordinate
+	 * @param y coordinate
+	 */
 	public Rook(EnumPieceColor color, int coordX, int coordY) {
 		super(color, coordX, coordY);
 	}
