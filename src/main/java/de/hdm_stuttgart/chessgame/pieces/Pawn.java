@@ -105,7 +105,7 @@ public class Pawn extends ChessPiece
 						{
 							enPassantFlagged = true;
 							enPassantX = x;
-							enPassantY = y;
+							enPassantY = nextY;
 							firstMove++;
 							return true;
 						}
