@@ -51,7 +51,6 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void start(Stage primaryStage)
 	{			
-		Main.setCurrentDisplay(this);
 		AnchorPane menuPane = new AnchorPane();
 		menuPane.setId("startscreen");
 
