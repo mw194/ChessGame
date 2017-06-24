@@ -41,6 +41,7 @@ public class GUIDisplay extends Application implements IDisplay
 	private StringProperty moveString; //Shows the number of moves
 	private Stage gameStage; //Stage of the main game
 	private GridPane board; //Pane of the board
+	private int lastMove;
 
 	/**
 	 * Entry point of the GUIDisplay class
@@ -225,6 +226,12 @@ public class GUIDisplay extends Application implements IDisplay
 		if (game == null) {
 			return;
 		}
+		
+		if (game.getMove() > lastMove)
+		{
+			statusString.set("");
+			lastMove = game.getMove();
+		}
 
 		// Status strings are updated
 		currentString.set("Current Team: " + game.getCurrentTeam().toString());
@@ -338,16 +345,17 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck)
 	{
+		if (!whiteInCheck && !blackInCheck) return;
 		StringBuilder sb = new StringBuilder();
 		if (whiteInCheck) sb.append("Weiß im Schach. ");
 		if (blackInCheck) sb.append("Schwarz im Schach.");
-		statusString.set(sb.toString());
+		if (statusString != null) statusString.set(sb.toString());
 	}
 
 	@Override
 	public void processInvalidAction(String message)
 	{
 		// Problem Exists Between Keyboard And Chair
-		statusString.set(message);
+		if (statusString != null) statusString.set(message);
 	}
 }

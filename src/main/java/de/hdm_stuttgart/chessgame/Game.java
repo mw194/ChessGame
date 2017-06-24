@@ -22,6 +22,9 @@ public class Game
 	private boolean finished;
 	public Object threadLock = new Object();
 
+	/**
+	 * @param display This game's display
+	 */
 	public Game(IDisplay display)
 	{
 		this.display = display;
@@ -32,7 +35,6 @@ public class Game
 		thread.setDaemon(true);
 		thread.start();
 	}
-
 
 	/**
 	 * Populates the board with a standard chess game.
@@ -306,11 +308,17 @@ public class Game
 		return false;
 	}
 	
+	/**
+	 * @return Is the game finished?
+	 */
 	public boolean isFinished()
 	{
 		return finished;
 	}
 	
+	/**
+	 * @return The current game board
+	 */
 	public ChessPiece[][] getBoard() {
 		return board;
 	}

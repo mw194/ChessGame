@@ -1,11 +1,19 @@
 package de.hdm_stuttgart.chessgame;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * Logs the current state of the game to console.
+ */
 public class GameStateLoggerTask implements Runnable
 {
-	private static int taskIDCounter = 1;
+	private static AtomicInteger taskIDCounter = new AtomicInteger(1);
 	private final long startTime = System.currentTimeMillis();
 	private final Game game;
 	
+	/**
+	 * @param parent The game to log
+	 */
 	public GameStateLoggerTask(Game parent)
 	{
 		this.game = parent;
@@ -14,7 +22,7 @@ public class GameStateLoggerTask implements Runnable
 	@Override
 	public void run()
 	{
-		Thread.currentThread().setName("GameStateLoggerTask-" + taskIDCounter++);
+		Thread.currentThread().setName("GameStateLoggerTask-" +  taskIDCounter.getAndIncrement());
 		
 		while (!game.isFinished())
 		{
