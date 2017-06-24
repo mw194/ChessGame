@@ -41,7 +41,7 @@ public class GUIDisplay extends Application implements IDisplay
 	private StringProperty moveString; //Shows the number of moves
 	private Stage gameStage; //Stage of the main game
 	private GridPane board; //Pane of the board
-	
+
 	/**
 	 * Entry point of the GUIDisplay class
 	 * Startmenu of the game is visualized
@@ -54,23 +54,23 @@ public class GUIDisplay extends Application implements IDisplay
 		Main.setCurrentDisplay(this);
 		AnchorPane menuPane = new AnchorPane();
 		menuPane.setId("startscreen");
-		
+
 		/////STARTBUTTON/////////////////////////
-        Button buttonStart = new Button("Start new Game");
-        buttonStart.setAlignment(Pos.TOP_LEFT);
-        buttonStart.setPrefWidth(150);
-        AnchorPane.setLeftAnchor(buttonStart, 10.0);
-        AnchorPane.setBottomAnchor(buttonStart, 90.0);
-        buttonStart.getStyleClass().add("StartButton");   
+		Button buttonStart = new Button("Start new Game");
+		buttonStart.setAlignment(Pos.TOP_LEFT);
+		buttonStart.setPrefWidth(150);
+		AnchorPane.setLeftAnchor(buttonStart, 10.0);
+		AnchorPane.setBottomAnchor(buttonStart, 90.0);
+		buttonStart.getStyleClass().add("StartButton");   
 		buttonStart.setOnAction(event -> {
 			primaryStage.close(); // start menu window is closed
 			game = new Game(this); // new game is instantiated
 			game(); // start Stage for game visualization
 		});
 		/////OPTIONSBUTTON/////////////////////////      
-        Button buttonOptionen = new Button("Options");
-        buttonOptionen.setAlignment(Pos.TOP_LEFT);
-        buttonOptionen.setPrefWidth(150);
+		Button buttonOptionen = new Button("Options");
+		buttonOptionen.setAlignment(Pos.TOP_LEFT);
+		buttonOptionen.setPrefWidth(150);
 		AnchorPane.setLeftAnchor(buttonOptionen, 10.0);
 		AnchorPane.setBottomAnchor(buttonOptionen, 50.0);
 		buttonOptionen.getStyleClass().add("StartButton");
@@ -87,27 +87,27 @@ public class GUIDisplay extends Application implements IDisplay
 			menuPane.getChildren().add(gif);
 		});
 		/////QUITBUTTON///////////////////////////          
-        Button buttonEnd = new Button("Quit");
-        buttonEnd.setAlignment(Pos.TOP_LEFT);
-        buttonEnd.setPrefWidth(150);
-        AnchorPane.setLeftAnchor(buttonEnd, 10.0);
-        AnchorPane.setBottomAnchor(buttonEnd, 10.0);
-        buttonEnd.getStyleClass().add("StartButton");
+		Button buttonEnd = new Button("Quit");
+		buttonEnd.setAlignment(Pos.TOP_LEFT);
+		buttonEnd.setPrefWidth(150);
+		AnchorPane.setLeftAnchor(buttonEnd, 10.0);
+		AnchorPane.setBottomAnchor(buttonEnd, 10.0);
+		buttonEnd.getStyleClass().add("StartButton");
 		buttonEnd.setOnAction(event -> {
-		        Platform.exit(); // Close Application
+			Platform.exit(); // Close Application
 		});
 		//////////////////////////////////////////   
-		
+
 		Label title = new Label("Chess");
 		title.setId("title");
 		AnchorPane.setLeftAnchor(title, 10.0);
-		
-        menuPane.getChildren().addAll(title, buttonStart, buttonOptionen, buttonEnd);
-        
+
+		menuPane.getChildren().addAll(title, buttonStart, buttonOptionen, buttonEnd);
+
 		Scene scene = new Scene(menuPane, 280, 280);     	
-        scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());   
-        primaryStage.setTitle("Chess");
-        primaryStage.setResizable(false);
+		scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());   
+		primaryStage.setTitle("Chess");
+		primaryStage.setResizable(false);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 	}
@@ -127,34 +127,34 @@ public class GUIDisplay extends Application implements IDisplay
 		Button buttonFile = new Button("File");
 		buttonFile.getStyleClass().add("toolbar");
 		buttonFile.setAlignment(Pos.TOP_LEFT);
-		
+
 		Button buttonOptions = new Button("Options");
 		buttonOptions.getStyleClass().add("toolbar");
 		buttonOptions.setAlignment(Pos.TOP_LEFT);
-		
+
 		Button buttonHelp = new Button("Help");
 		buttonHelp.getStyleClass().add("toolbar");
 		buttonHelp.setAlignment(Pos.TOP_LEFT);
-		
+
 		ToolBar top = new ToolBar(buttonFile/*, buttonOptions, buttonHelp*/);
-		
+
 		//Chessboard///////////////////
 		BorderPane boardWithBorders = new BorderPane();
 		board = new GridPane(); // actual board
 		board.setId("board");
-		
+
 		HBox topSide = new HBox(); //top border
 		topSide.setPrefHeight(20);
 		topSide.setId("top");
-		
+
 		VBox leftSide = new VBox(); // left border
 		leftSide.setId("left");
 		leftSide.setPrefWidth(20);
-		
+
 		boardWithBorders.setTop(topSide);
 		boardWithBorders.setLeft(leftSide);
 		boardWithBorders.setCenter(board);
-		
+
 		//Bottom////////////////////
 		VBox bottom = new VBox(); // Bottom info space
 
@@ -168,13 +168,13 @@ public class GUIDisplay extends Application implements IDisplay
 		currentLabel.textProperty().bind(currentString);
 		Label moveLabel = new Label("Move: ");
 		moveLabel.textProperty().bind(moveString);
-	
+
 		bottom.getChildren().addAll(statusLabel, currentLabel, moveLabel);
 		bottom.setPrefHeight(126);
 		bottom.setPadding(new Insets(0, 0, 0, 20));
 		/////////////////////////
-		
-		
+
+
 		//add cells to the board
 		for (int row = 0; row < 8; row++) {
 			for (int column = 0; column < 8; column++) {
@@ -203,7 +203,7 @@ public class GUIDisplay extends Application implements IDisplay
 
 		// first visual update of the game
 		processUpdate(game.getBoard(), game.getCurrentTeam());
-		
+
 		Scene scene = new Scene(canvas);
 		scene.getStylesheets().addAll(this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/style.css").toExternalForm());
 		gameStage.setTitle("Chess");
@@ -213,7 +213,7 @@ public class GUIDisplay extends Application implements IDisplay
 		gameStage.setResizable(false);
 		gameStage.show();
 	}
-		
+
 	/**
 	 * This method is executed after every single mouseclick on the chessboard
 	 * The textures of the board get rearranged
@@ -233,41 +233,42 @@ public class GUIDisplay extends Application implements IDisplay
 
 		// Clear all textures of the buttons
 		for (Node b : board.getChildren()) { 
-				b.setStyle("-fx-background-image: none;" 
-						 + "-fx-background-color: transparent;");
-				((Button) b).setBorder(null);
+			b.setStyle("-fx-background-image: none;" 
+					+ "-fx-background-color: transparent;");
+			((Button) b).setBorder(null);
 		}
-		
 
-		// Add the new Texture according to their position and type
-		for (ChessPiece p : game.whitePieces) {
-			String s = "";
-			
-			if (p instanceof Pawn) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_white.png";
-			if (p instanceof Queen) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_white.png";
-			if (p instanceof King) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/King_white.png";
-			if (p instanceof Bishop) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_white.png";
-			if (p instanceof Knight) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_white.png";
-			if (p instanceof Rook) 
-				s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_white.png";
-
-			int index = p.getY() * 8 + p.getX(); // evaluate position
-			int size = 50;
-			board.getChildren().get(index).setStyle(
-							"-fx-background-color: transparent;" 
-							+ "-fx-background-image: url('" + s + "'); "
-							+ "-fx-background-size: "+ size + "px;" 
-							+ "-fx-background-repeat: no-repeat;"
-							+ "-fx-background-position: center;");
-		}
 
 		synchronized (game.threadLock)
 		{
+
+			// Add the new Texture according to their position and type
+			for (ChessPiece p : game.whitePieces) {
+				String s = "";
+
+				if (p instanceof Pawn) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Pawn_white.png";
+				if (p instanceof Queen) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Queen_white.png";
+				if (p instanceof King) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/King_white.png";
+				if (p instanceof Bishop) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Bishop_white.png";
+				if (p instanceof Knight) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Knight_white.png";
+				if (p instanceof Rook) 
+					s = "/de/hdm_stuttgart/chessgame/GUIresources/Rook_white.png";
+
+				int index = p.getY() * 8 + p.getX(); // evaluate position
+				int size = 50;
+				board.getChildren().get(index).setStyle(
+						"-fx-background-color: transparent;" 
+								+ "-fx-background-image: url('" + s + "'); "
+								+ "-fx-background-size: "+ size + "px;" 
+								+ "-fx-background-repeat: no-repeat;"
+								+ "-fx-background-position: center;");
+			}
+
 			for (ChessPiece p : game.blackPieces) {
 				String s = "";
 
@@ -286,19 +287,19 @@ public class GUIDisplay extends Application implements IDisplay
 
 				int index = p.getY() * 8 + p.getX();
 				board.getChildren().get(index)
-						.setStyle("-fx-background-color: transparent;" + "-fx-background-image: url('" + s + "'); "
-								+ "-fx-background-size: 50px;" + "-fx-background-repeat: no-repeat;"
-								+ "-fx-background-position: center;");
+				.setStyle("-fx-background-color: transparent;" + "-fx-background-image: url('" + s + "'); "
+						+ "-fx-background-size: 50px;" + "-fx-background-repeat: no-repeat;"
+						+ "-fx-background-position: center;");
 			}
 		}
 
 
 		if (game.selectedPiece != null) {
-			  // add border for the selected piece
+			// add border for the selected piece
 			int indexSelected = game.selectedPiece.getY() * 8 + game.selectedPiece.getX();
 			((Button) board.getChildren().get(indexSelected))
-					.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
-							new BorderWidths(6, 6, 6, 6, false, false, false, false))));
+			.setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY,
+					new BorderWidths(6, 6, 6, 6, false, false, false, false))));
 		}
 	}
 
@@ -314,11 +315,11 @@ public class GUIDisplay extends Application implements IDisplay
 		VBox root = new VBox();
 		root.setAlignment(Pos.CENTER);
 		root.setSpacing(10);
-		
+
 		//Label for the winning team
 		Label winLabel = new Label(winner+ " Wins!");
 		winLabel.setStyle("-fx-font-family: 'didot'; -fx-font-size: 3em;");
-		
+
 		//back to menu button
 		Button winButton = new Button("Back to menu");
 		winButton.setOnAction(event -> {
@@ -326,7 +327,7 @@ public class GUIDisplay extends Application implements IDisplay
 			winStage.close(); //close 'game over' stage
 			start(new Stage()); //main menu with new stage 
 		});
-		
+
 		root.getChildren().addAll(winLabel, winButton);
 
 		Scene scene = new Scene(root, 270, 100);
@@ -334,13 +335,13 @@ public class GUIDisplay extends Application implements IDisplay
 		winStage.setResizable(false);
 		winStage.show();
 	}
-		
+
 	@Override
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck)
 	{
 		// Check status
 	}
-	
+
 	@Override
 	public void processInvalidAction(String message)
 	{
