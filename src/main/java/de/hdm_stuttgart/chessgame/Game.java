@@ -174,7 +174,7 @@ public class Game
 	private void move(int xNew, int yNew) {
 		if (selectedPiece.canMove(xNew, yNew, board)) {
 			if (board[xNew][yNew] != null) {
-				Main.logInfo("Figur geschlagen.");
+				display.processInvalidAction("Figur geschlagen.");
 				synchronized (threadLock)
 				{
 					if (whitePieces.contains(board[xNew][yNew])) {
@@ -191,7 +191,7 @@ public class Game
 			move++;
 			update();
 		} else {
-			Main.logInfo("Kann nicht dahin.");
+			display.processInvalidAction("Kann nicht dorthin.");
 			return;
 		}
 	}

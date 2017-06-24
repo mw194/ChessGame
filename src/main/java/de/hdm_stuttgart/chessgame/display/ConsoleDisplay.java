@@ -53,9 +53,4 @@ public class ConsoleDisplay implements IDisplay
 			Main.getLog().info("Black is in check");
 		}
 	}
-
-	@Override
-	public void processLogMessage(String message)
-	{
-	}
 }

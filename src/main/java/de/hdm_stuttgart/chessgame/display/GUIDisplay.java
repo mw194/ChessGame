@@ -339,20 +339,16 @@ public class GUIDisplay extends Application implements IDisplay
 	@Override
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck)
 	{
-		// Check status
+		StringBuilder sb = new StringBuilder();
+		if (whiteInCheck) sb.append("Weiß im Schach. ");
+		if (blackInCheck) sb.append("Schwarz im Schach.");
+		statusString.set(sb.toString());
 	}
 
 	@Override
 	public void processInvalidAction(String message)
 	{
 		// Problem Exists Between Keyboard And Chair
-		Main.logInfo(message);
-	}
-
-	@Override
-	public void processLogMessage(String message)
-	{
 		statusString.set(message);
 	}
-
 }

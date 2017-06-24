@@ -27,12 +27,12 @@ public class Main
 		display = g;
 	}
 	
-	public static void logInfo(String message)
-	{
-		// an gui übergeben
-		display.processLogMessage(message);
-		
-		log.info(message);
-	}
+//	public static void logInfo(String message)
+//	{
+//		// an gui übergeben
+//		display.processLogMessage(message);
+//		
+//		log.info(message);
+//	}
 
 }

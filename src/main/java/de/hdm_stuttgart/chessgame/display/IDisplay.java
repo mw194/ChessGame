@@ -32,6 +32,4 @@ public interface IDisplay
 	 * @param blackInCheck Is the black king in check?
 	 */
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck);
-	
-	public void processLogMessage(String message);
 }
