@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -27,6 +29,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
 /**
  * Class which visualizes the game (Game.class) via JavaFX
@@ -123,20 +126,56 @@ public class GUIDisplay extends Application implements IDisplay
 
 		BorderPane canvas = new BorderPane();	
 
-		//Toolbar//////////////////////
-		Button buttonFile = new Button("File");
-		buttonFile.getStyleClass().add("toolbar");
-		buttonFile.setAlignment(Pos.TOP_LEFT);
-
-		Button buttonOptions = new Button("Options");
-		buttonOptions.getStyleClass().add("toolbar");
-		buttonOptions.setAlignment(Pos.TOP_LEFT);
-
-		Button buttonHelp = new Button("Help");
-		buttonHelp.getStyleClass().add("toolbar");
-		buttonHelp.setAlignment(Pos.TOP_LEFT);
-
-		ToolBar top = new ToolBar(buttonFile/*, buttonOptions, buttonHelp*/);
+		//Toolbar////////////////
+				Button buttonNewGame = new Button("New Game");
+				buttonNewGame.getStyleClass().add("toolbar");
+				buttonNewGame.setAlignment(Pos.TOP_LEFT);
+				buttonNewGame.setOnAction(new EventHandler<ActionEvent>() {
+					public void handle(ActionEvent event) {
+						gameStage.close();
+							try {
+								game = new Game(new GUIDisplay());
+								game();
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+					}
+				});      
+				
+				
+				
+				Button buttonBacktoMenu = new Button("Back to Menu");
+				buttonBacktoMenu.getStyleClass().add("toolbar");
+				buttonBacktoMenu.setAlignment(Pos.TOP_LEFT);
+				buttonBacktoMenu.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						gameStage.close();
+						
+						try {
+							start(new Stage());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
+				Button buttonHelp = new Button("Help");
+				buttonHelp.getStyleClass().add("toolbar");
+				buttonHelp.setAlignment(Pos.TOP_LEFT);
+				buttonHelp.setOnAction(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {				
+						try {
+							helper(gameStage);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+				});
+				
+				
+				ToolBar top = new ToolBar(buttonNewGame, buttonBacktoMenu, buttonHelp);
 
 		//Chessboard///////////////////
 		BorderPane boardWithBorders = new BorderPane();
@@ -357,5 +396,22 @@ public class GUIDisplay extends Application implements IDisplay
 	{
 		// Problem Exists Between Keyboard And Chair
 		if (statusString != null) statusString.set(message);
+	}
+	
+	public void helper(Stage gameStage)	{
+		Stage winStage = new Stage();
+		VBox root = new VBox();
+		root.setAlignment(Pos.CENTER);
+		root.setSpacing(10);
+		
+		Text text = new Text() ;
+	    text.setText("Die Polizei ist informiert, der Bitcoin Miner an!");
+	    
+	    root.getChildren().add(text);
+	    
+		Scene scene = new Scene(root, 450, 220);
+		winStage.setScene(scene);
+		winStage.setResizable(false);
+		winStage.show();
 	}
 }
