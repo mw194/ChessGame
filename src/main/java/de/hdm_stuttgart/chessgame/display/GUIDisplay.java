@@ -1,32 +1,15 @@
 package de.hdm_stuttgart.chessgame.display;
 
 import de.hdm_stuttgart.chessgame.Game;
-import de.hdm_stuttgart.chessgame.Main;
 import de.hdm_stuttgart.chessgame.pieces.*;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToolBar;
+import javafx.application.*;
+import javafx.beans.property.*;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -167,7 +150,7 @@ public class GUIDisplay extends Application implements IDisplay
 					@Override
 					public void handle(ActionEvent event) {				
 						try {
-							helper(gameStage);
+							helper();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -385,6 +368,10 @@ public class GUIDisplay extends Application implements IDisplay
 	public void processCheckPreupdate(boolean whiteInCheck, boolean blackInCheck)
 	{
 		if (!whiteInCheck && !blackInCheck) return;
+		if (game.getMove() > lastMove)
+		{
+			lastMove = game.getMove();
+		}
 		StringBuilder sb = new StringBuilder();
 		if (whiteInCheck) sb.append("Weiß im Schach. ");
 		if (blackInCheck) sb.append("Schwarz im Schach.");
@@ -398,7 +385,10 @@ public class GUIDisplay extends Application implements IDisplay
 		if (statusString != null) statusString.set(message);
 	}
 	
-	public void helper(Stage gameStage)	{
+	/**
+	 * Displays the help box in game.
+	 */
+	public void helper()	{
 		Stage winStage = new Stage();
 		VBox root = new VBox();
 		root.setAlignment(Pos.CENTER);
