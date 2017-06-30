@@ -1,8 +1,6 @@
 package de.hdm_stuttgart.chessgame.display;
 
 
-import java.io.File;
-
 import de.hdm_stuttgart.chessgame.Game;
 import de.hdm_stuttgart.chessgame.pieces.*;
 import javafx.application.*;
@@ -23,9 +21,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
