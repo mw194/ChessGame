@@ -316,6 +316,11 @@ public class Game
 		return finished;
 	}
 	
+	public void setFinished(boolean fin)
+	{
+		finished = fin;
+	}
+	
 	/**
 	 * @return The current game board
 	 */

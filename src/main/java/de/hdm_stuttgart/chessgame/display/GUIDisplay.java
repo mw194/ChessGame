@@ -50,6 +50,7 @@ public class GUIDisplay extends Application implements IDisplay
 		buttonStart.getStyleClass().add("StartButton");   
 		buttonStart.setOnAction(event -> {
 			primaryStage.close(); // start menu window is closed
+			if (Game.getCurrentInstance() != null) Game.getCurrentInstance().setFinished(true);
 			game = new Game(this); // new game is instantiated
 			game(); // start Stage for game visualization
 		});
@@ -117,6 +118,7 @@ public class GUIDisplay extends Application implements IDisplay
 					public void handle(ActionEvent event) {
 						gameStage.close();
 							try {
+								if (Game.getCurrentInstance() != null) Game.getCurrentInstance().setFinished(true);
 								game = new Game(new GUIDisplay());
 								game();
 							} catch (Exception e) {
