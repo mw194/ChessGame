@@ -1,5 +1,8 @@
 package de.hdm_stuttgart.chessgame.display;
 
+
+import java.io.File;
+
 import de.hdm_stuttgart.chessgame.Game;
 import de.hdm_stuttgart.chessgame.Main;
 import de.hdm_stuttgart.chessgame.pieces.*;
@@ -27,6 +30,9 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.scene.text.Text;
@@ -81,12 +87,18 @@ public class GUIDisplay extends Application implements IDisplay
 		gif.setFitWidth(280);
 		gif.setFitHeight(280);
 		buttonOptionen.setOnAction(event -> {
+			AudioClip mApplause = new AudioClip(
+					this.getClass().getResource("/de/hdm_stuttgart/chessgame/GUIresources/sound.mp3")
+					.toExternalForm());
+
 			for (Node n : menuPane.getChildren()) {
 				if (n == gif) {
+					mApplause.stop();
 					menuPane.getChildren().remove(n);
 					return;
 				}
 			}
+			mApplause.play();
 			menuPane.getChildren().add(gif);
 		});
 		/////QUITBUTTON///////////////////////////          
