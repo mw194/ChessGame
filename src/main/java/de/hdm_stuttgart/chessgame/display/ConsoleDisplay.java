@@ -5,6 +5,7 @@ import de.hdm_stuttgart.chessgame.pieces.*;
 
 /**
  * Prints the game board to the console after every update.
+ * Unused in normal application.
  */
 @Deprecated
 public class ConsoleDisplay implements IDisplay
