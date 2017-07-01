@@ -17,7 +17,7 @@ public class Game
 	public ArrayList<ChessPiece> whitePieces = new ArrayList<>(); // List of white pieces
 	public ArrayList<ChessPiece> blackPieces = new ArrayList<>(); // List of black piece
 	public ChessPiece selectedPiece;
-	private int move = 0;
+	private AtomicInteger move = new AtomicInteger(0);
 	private final IDisplay display;
 	private boolean finished;
 	public Object threadLock = new Object();
@@ -79,7 +79,7 @@ public class Game
 	 */
 	public EnumPieceColor getCurrentTeam()
 	{
-		if (move % 2 == 0)
+		if (move.get() % 2 == 0)
 		{
 			return EnumPieceColor.WHITE;
 		} else
@@ -92,7 +92,7 @@ public class Game
 	 * @return The current turn
 	 */
 	public int getMove() {
-		return move;
+		return move.get();
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class Game
 
 			selectedPiece.move(xNew, yNew);
 			selectedPiece = null;
-			move++;
+			move.getAndIncrement();
 			update();
 		} else {
 			display.processInvalidAction("Kann nicht dorthin.");
