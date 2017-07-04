@@ -32,7 +32,7 @@ public class ConsoleDisplay implements IDisplay
 	@Override
 	public void processInvalidAction(String message)
 	{
-		Main.getLog().info(message);
+		Main.getLog().warn(message);
 	}
 
 	@Override

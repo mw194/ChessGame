@@ -2,6 +2,7 @@ package de.hdm_stuttgart.chessgame.display;
 
 
 import de.hdm_stuttgart.chessgame.Game;
+import de.hdm_stuttgart.chessgame.Main;
 import de.hdm_stuttgart.chessgame.pieces.*;
 import javafx.application.*;
 import javafx.beans.property.*;
@@ -401,6 +402,7 @@ public class GUIDisplay extends Application implements IDisplay
 	public void processInvalidAction(String message)
 	{
 		// Problem Exists Between Keyboard And Chair
+		Main.getLog().warn("Invalid Action: " + message);
 		if (statusString != null) statusString.set(message);
 	}
 	
