@@ -12,7 +12,7 @@ public class King extends ChessPiece
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
-	public King(EnumPieceColor color, int x, int y) {
+	protected King(EnumPieceColor color, int x, int y) {
 		super(color, x, y);
 	}
 

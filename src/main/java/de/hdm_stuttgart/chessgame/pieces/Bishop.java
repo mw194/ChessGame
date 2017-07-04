@@ -12,7 +12,7 @@ public class Bishop extends ChessPiece
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
-	public Bishop(EnumPieceColor color, int x, int y)
+	protected Bishop(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);
 	}

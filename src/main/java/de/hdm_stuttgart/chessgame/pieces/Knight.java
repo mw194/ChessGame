@@ -11,7 +11,7 @@ public class Knight extends ChessPiece
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
-	public Knight(EnumPieceColor color, int x, int y)
+	protected Knight(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);
 	}

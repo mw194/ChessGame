@@ -11,7 +11,7 @@ public class Rook extends ChessPiece {
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
-	public Rook(EnumPieceColor color, int coordX, int coordY) {
+	protected Rook(EnumPieceColor color, int coordX, int coordY) {
 		super(color, coordX, coordY);
 	}
 

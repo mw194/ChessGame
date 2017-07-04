@@ -13,7 +13,7 @@ public class Pawn extends ChessPiece
 	 * @param x coordinate
 	 * @param y coordinate
 	 */
-	public Pawn(EnumPieceColor color, int x, int y)
+	protected Pawn(EnumPieceColor color, int x, int y)
 	{
 		super(color, x, y);
 	}
