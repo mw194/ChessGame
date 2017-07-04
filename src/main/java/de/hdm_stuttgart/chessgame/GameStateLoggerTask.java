@@ -2,6 +2,8 @@ package de.hdm_stuttgart.chessgame;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.logging.log4j.Level;
+
 /**
  * Logs the current state of the game to console.
  */
@@ -40,7 +42,7 @@ public class GameStateLoggerTask implements Runnable
 				Thread.sleep(10000L);
 			} catch (InterruptedException e)
 			{
-				e.printStackTrace();
+				Main.getLog().fatal("GameStateLoggerTask was interrupted.", e);
 			}
 		}
 	}
